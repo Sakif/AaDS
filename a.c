@@ -15,10 +15,10 @@ int const rearRightMotor2 = 11;
 int const switchPin = 0;
 int const onLED = 13;
 
-int const colour1 = A0;
-int const colour2 = A1;
-int const colour3 = A2;
-int const colour4 = A3;
+int const irSensorFL = A0;
+int const irSensorFR = A1;
+int const irSensorRL = A2;
+int const irSensorRR = A3;
 
 bool inititalDelayComplete = false;
 float frontRange = 0.0;
@@ -42,6 +42,11 @@ void setup()
 	pinMode(sonicSensorPinFront, INPUT);
 	pinMode(sonicSensorPinBack, INPUT);
 
+	pinMode(irSensorFL, INPUT);
+	pinMode(irSensorFR, INPUT);
+	pinMode(irSensorRL, INPUT);
+	pinMode(irSensorRR, INPUT);
+
 	pinMode(rightMotorE, OUTPUT);
 	pinMode(frontRightMotor1, OUTPUT);
 	pinMode(frontRightMotor2, OUTPUT);
@@ -53,6 +58,66 @@ void setup()
 	pinMode(frontLeftMotor2, OUTPUT);
 	pinMode(rearLeftMotor1, OUTPUT);
 	pinMode(rearLeftMotor2, OUTPUT);
+}
+
+void forward()
+{
+	digitalWrite(rightMotorE, HIGH);
+	digitalWrite(frontRightMotor1, LOW);
+	digitalWrite(frontRightMotor2, HIGH);
+	digitalWrite(rearRightMotor1, HIGH);
+	digitalWrite(rearRightMotor2, LOW);
+
+	digitalWrite(leftMotorE, HIGH);
+	digitalWrite(frontLeftMotor1, LOW);
+	digitalWrite(frontLeftMotor2, HIGH);
+	digitalWrite(rearLeftMotor1, LOW);
+	digitalWrite(rearLeftMotor2, HIGH);
+}
+
+void back()
+{
+	digitalWrite(rightMotorE, HIGH);
+	digitalWrite(frontRightMotor1, HIGH);
+	digitalWrite(frontRightMotor2, LOW);
+	digitalWrite(rearRightMotor1, LOW);
+	digitalWrite(rearRightMotor2, HIGH);
+
+	digitalWrite(leftMotorE, HIGH);
+	digitalWrite(frontLeftMotor1, HIGH);
+	digitalWrite(frontLeftMotor2, LOW);
+	digitalWrite(rearLeftMotor1, HIGH);
+	digitalWrite(rearLeftMotor2, LOW);
+}
+
+void right()
+{
+	digitalWrite(rightMotorE, HIGH);
+	digitalWrite(frontRightMotor1, LOW);
+	digitalWrite(frontRightMotor2, HIGH);
+	digitalWrite(rearRightMotor1, HIGH);
+	digitalWrite(rearRightMotor2, LOW);
+
+	digitalWrite(leftMotorE, HIGH);
+	digitalWrite(frontLeftMotor1, HIGH);
+	digitalWrite(frontLeftMotor2, LOW);
+	digitalWrite(rearLeftMotor1, HIGH);
+	digitalWrite(rearLeftMotor2, LOW);
+}
+
+void left()
+{
+	digitalWrite(rightMotorE, HIGH);
+	digitalWrite(frontRightMotor1, HIGH);
+	digitalWrite(frontRightMotor2, LOW);
+	digitalWrite(rearRightMotor1, LOW);
+	digitalWrite(rearRightMotor2, HIGH);
+
+	digitalWrite(leftMotorE, HIGH);
+	digitalWrite(frontLeftMotor1, LOW);
+	digitalWrite(frontLeftMotor2, HIGH);
+	digitalWrite(rearLeftMotor1, LOW);
+	digitalWrite(rearLeftMotor2, HIGH);
 }
 
 void loop()
