@@ -1,7 +1,7 @@
 int const sonicSensorPinFront = 4;
 int const sonicSensorPinBack = 3;
-int const LeftMotorE = 1;
-int const RightMotorE = 2;
+int const leftMotorE = 1;
+int const rightMotorE = 2;
 //int const rearLeftMotorE = 3;
 //int const rearRightMotorE = 4;
 int const frontLeftMotor1 = 5;
@@ -41,6 +41,9 @@ void setup()
 	Serial.begin(9600);
 	pinMode(sonicSensorPinFront, INPUT);
 	pinMode(sonicSensorPinBack, INPUT);
+	pinMode(RightMotorE, OUTPUT);
+	pinMode(frontRightMotor1, OUTPUT);
+	pinMode(frontRightMotor2, OUTPUT);
 }
 
 void loop()
@@ -56,4 +59,7 @@ void loop()
 	Serial.print(frontRange);
 	Serial.print(" Back: ");
 	Serial.println(backRange);
+	digitalWrite(rightMotorE, HIGH);
+	digitalWrite(frontRightMotor1, HIGH);
+	digitalWrite(frontRightMotor2, HIGH);
 }
