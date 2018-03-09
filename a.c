@@ -41,9 +41,18 @@ void setup()
 	Serial.begin(9600);
 	pinMode(sonicSensorPinFront, INPUT);
 	pinMode(sonicSensorPinBack, INPUT);
-	pinMode(RightMotorE, OUTPUT);
+
+	pinMode(rightMotorE, OUTPUT);
 	pinMode(frontRightMotor1, OUTPUT);
 	pinMode(frontRightMotor2, OUTPUT);
+	pinMode(rearRightMotor1, OUTPUT);
+	pinMode(rearRightMotor2, OUTPUT);
+
+	pinMode(leftMotorE, OUTPUT);
+	pinMode(frontLeftMotor1, OUTPUT);
+	pinMode(frontLeftMotor2, OUTPUT);
+	pinMode(rearLeftMotor1, OUTPUT);
+	pinMode(rearLeftMotor2, OUTPUT);
 }
 
 void loop()
@@ -59,7 +68,16 @@ void loop()
 	Serial.print(frontRange);
 	Serial.print(" Back: ");
 	Serial.println(backRange);
+
 	digitalWrite(rightMotorE, HIGH);
 	digitalWrite(frontRightMotor1, HIGH);
-	digitalWrite(frontRightMotor2, HIGH);
+	digitalWrite(frontRightMotor2, LOW);
+	digitalWrite(rearRightMotor1, HIGH);
+	digitalWrite(rearRightMotor2, LOW);
+
+	digitalWrite(leftMotorE, HIGH);
+	digitalWrite(frontLeftMotor1, HIGH);
+	digitalWrite(frontLeftMotor2, LOW);
+	digitalWrite(rearLeftMotor1, HIGH);
+	digitalWrite(rearLeftMotor2, LOW);
 }
