@@ -1,15 +1,3 @@
-/*****************************************
- * UW User ID:  uwuserid
- * Submitted for ECE 250
- * Department of Electrical and Computer Engineering
- * University of Waterloo
- * Calender Term of Submission:  (Winter|Spring|Fall) 20NN
- *
- * By submitting this file, I affirm that
- * I am the author of all modifications to
- * the provided code.
- *****************************************/
-
 #ifndef DOUBLE_SENTINEL_LIST_H
 #define DOUBLE_SENTINEL_LIST_H
 
@@ -84,15 +72,7 @@ class Double_sentinel_list {
 /////////////////////////////////////////////////////////////////////////
 
 template <typename Type>
-Double_sentinel_list<Type>::Double_sentinel_list() : // Updated the initialization list here
-						     list_head(nullptr),
-						     list_tail(nullptr),
-						     list_size(0) {
-	// Enter your implementation here
-}
-
-template <typename Type>
-Double_sentinel_list<Type>::Double_sentinel_list(Double_sentinel_list<Type> const &list) {
+Double_sentinel_list<Type>::Double_sentinel_list() {
 	list_head = new Double_sentinel_list<Type>::Double_node(0, nullptr, nullptr);
 	list_tail = new Double_sentinel_list<Type>::Double_node(0, list_head, nullptr);
 	list_head->next_node = list_tail;
@@ -100,17 +80,13 @@ Double_sentinel_list<Type>::Double_sentinel_list(Double_sentinel_list<Type> cons
 }
 
 template <typename Type>
-Double_sentinel_list<Type>::Double_sentinel_list(Double_sentinel_list<Type> &&list) : // Updated the initialization list here
-										      list_head(nullptr),
-										      list_tail(nullptr),
-										      list_size(0) {
-	// Enter your implementation here
-}
+Double_sentinel_list<Type>::Double_sentinel_list(Double_sentinel_list<Type> const &list) {}
 
 template <typename Type>
-Double_sentinel_list<Type>::~Double_sentinel_list() {
-	// Enter your implementation here
-}
+Double_sentinel_list<Type>::Double_sentinel_list(Double_sentinel_list<Type> &&list) {}
+
+template <typename Type>
+Double_sentinel_list<Type>::~Double_sentinel_list() {}
 
 template <typename Type>
 int Double_sentinel_list<Type>::size() const {
@@ -124,14 +100,18 @@ bool Double_sentinel_list<Type>::empty() const {
 
 template <typename Type>
 Type Double_sentinel_list<Type>::front() const {
-	// Enter your implementation here
-	return Type(); // This returns a default value of Type
+	if (empty())
+		throw underflow();
+	else
+		return begin()->value();
 }
 
 template <typename Type>
 Type Double_sentinel_list<Type>::back() const {
-	// Enter your implementation here
-	return Type(); // This returns a default value of Type
+	if (empty())
+		throw underflow();
+	else
+		return rbegin()->value();
 }
 
 template <typename Type>
@@ -156,14 +136,21 @@ typename Double_sentinel_list<Type>::Double_node *Double_sentinel_list<Type>::re
 
 template <typename Type>
 typename Double_sentinel_list<Type>::Double_node *Double_sentinel_list<Type>::find(Type const &obj) const {
-	// Enter your implementation here
-	return nullptr;
+	for (auto node = begin(); node != end(); node = node->next()) {
+		if (node->value() == obj)
+			return node;
+	}
+	return end();
 }
 
 template <typename Type>
 int Double_sentinel_list<Type>::count(Type const &obj) const {
-	// Enter your implementation here
-	return 0;
+	int count = 0;
+	for (auto node = begin(); node != end(); node = node->next()) {
+		if (node->value() == obj)
+			count++;
+	}
+	return count;
 }
 
 template <typename Type>
@@ -173,116 +160,115 @@ void Double_sentinel_list<Type>::swap(Double_sentinel_list<Type> &list) {
 	std::swap(list_size, list.list_size);
 }
 
-// The assignment operator
 template <typename Type>
 Double_sentinel_list<Type> &Double_sentinel_list<Type>::operator=(Double_sentinel_list<Type> rhs) {
-	// This is done for you
 	swap(rhs);
-
 	return *this;
 }
 
-// The move operator
 template <typename Type>
 Double_sentinel_list<Type> &Double_sentinel_list<Type>::operator=(Double_sentinel_list<Type> &&rhs) {
-	// This is done for you
 	swap(rhs);
-
 	return *this;
 }
 
 template <typename Type>
 void Double_sentinel_list<Type>::push_front(Type const &obj) {
-	// Enter your implementation here
+	auto node = new Double_node(obj, rend(), begin());
+	begin()->previous_node = node;
+	rend()->next_node = node;
+	list_size++;
 }
 
 template <typename Type>
 void Double_sentinel_list<Type>::push_back(Type const &obj) {
-	// Enter your implementation here
+	auto node = new Double_node(obj, rbegin(), end());
+	rbegin()->next_node = node;
+	end()->previous_node = node;
+	list_size++;
 }
 
 template <typename Type>
 void Double_sentinel_list<Type>::pop_front() {
-	// Enter your implementation here
+	if (empty())
+		throw underflow();
+	else {
+		auto node = begin();
+		rend()->next_node = node->next();
+		node->next()->previous_node = rend();
+		list_size--;
+		delete node;
+	}
 }
 
 template <typename Type>
 void Double_sentinel_list<Type>::pop_back() {
-	// Enter your implementation here
+	if (empty())
+		throw underflow();
+	else {
+		auto node = rbegin();
+		end()->previous_node = node->previous();
+		node->previous()->next_node = end();
+		list_size--;
+		delete node;
+	}
 }
 
 template <typename Type>
 int Double_sentinel_list<Type>::erase(Type const &obj) {
-	// Enter your implementation here
-	return 0;
+	int count = 0;
+	for (auto node = rend(); node != end(); node = node->next()) {
+		if (node->next()->value() == obj) {
+			count++;
+			list_size--;
+			auto temp = node->next();
+			node->next_node = temp->next();
+			temp->next()->previous_node = node;
+			delete temp;
+		}
+	}
+	return count;
 }
 
 template <typename Type>
-Double_sentinel_list<Type>::Double_node::Double_node(
-    Type const &nv,
-    typename Double_sentinel_list<Type>::Double_node *pn,
-    typename Double_sentinel_list<Type>::Double_node *nn) :			// Updated the initialization list here
-							    node_value(Type()), // This assigns 'node_value' the default value of Type
-							    previous_node(nullptr),
-							    next_node(nullptr) {
-	// Enter your implementation here
+Double_sentinel_list<Type>::Double_node::Double_node(Type const &nv, Double_node *pn, Double_node *nn) {
+	node_value = nv;
+	previous_node = pn;
+	next_node = nn;
 }
 
 template <typename Type>
 Type Double_sentinel_list<Type>::Double_node::value() const {
-	// Enter your implementation here
-	return Type(); // This returns a default value of Type
+	return node_value;
 }
 
 template <typename Type>
 typename Double_sentinel_list<Type>::Double_node *Double_sentinel_list<Type>::Double_node::previous() const {
-	// Enter your implementation here
-	return nullptr;
+	return previous_node;
 }
 
 template <typename Type>
 typename Double_sentinel_list<Type>::Double_node *Double_sentinel_list<Type>::Double_node::next() const {
-	// Enter your implementation here
-	return nullptr;
+	return next_node;
 }
-
-/////////////////////////////////////////////////////////////////////////
-//                      Private member functions                       //
-/////////////////////////////////////////////////////////////////////////
-
-// If you author any additional private member functions, include them here
-
-/////////////////////////////////////////////////////////////////////////
-//                               Friends                               //
-/////////////////////////////////////////////////////////////////////////
-
-// You can modify this function however you want:  it will not be tested
 
 template <typename T>
 std::ostream &operator<<(std::ostream &out, Double_sentinel_list<T> const &list) {
 	out << "head";
-
-	for (typename Double_sentinel_list<T>::Double_node *ptr = list.rend(); ptr != nullptr; ptr = ptr->next()) {
-		if (ptr == list.rend() || ptr == list.end()) {
+	for (auto ptr = list.rend(); ptr != nullptr; ptr = ptr->next()) {
+		if (ptr == list.rend() || ptr == list.end())
 			out << "->S";
-		} else {
+		else
 			out << "->" << ptr->value();
-		}
 	}
-
-	out << "->0" << std::endl
-	    << "tail";
-
-	for (typename Double_sentinel_list<T>::Double_node *ptr = list.end(); ptr != nullptr; ptr = ptr->previous()) {
-		if (ptr == list.rend() || ptr == list.end()) {
+	out << "->0\ntail";
+	for (auto ptr = list.end(); ptr != nullptr; ptr = ptr->previous()) {
+		if (ptr == list.rend() || ptr == list.end())
 			out << "->S";
-		} else {
+		else
 			out << "->" << ptr->value();
-		}
 	}
-
 	out << "->0";
-
 	return out;
 }
 
