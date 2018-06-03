@@ -83,7 +83,6 @@ Double_sentinel_list<Type>::~Double_sentinel_list() {
 		pop_front();
 	delete list_head;
 	delete list_tail;
-	delete list_size;
 }
 
 template <typename Type>

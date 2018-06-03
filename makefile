@@ -1,4 +1,4 @@
 CC = g++ -std=c++17
 
 list:
-	$(CC) test.cpp
+	$(CC) testList.cpp -o list.out
