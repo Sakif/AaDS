@@ -6,9 +6,9 @@
 
 template <typename Type>
 class Double_sentinel_list {
-      public:
+public:
 	class Double_node {
-	      public:
+	public:
 		Double_node(Type const & = Type(), Double_node * = nullptr, Double_node * = nullptr);
 
 		Type value() const;
@@ -26,36 +26,28 @@ class Double_sentinel_list {
 	~Double_sentinel_list();
 
 	// Accessors
-
 	int size() const;
 	bool empty() const;
-
 	Type front() const;
 	Type back() const;
-
 	Double_node *begin() const;
 	Double_node *end() const;
 	Double_node *rbegin() const;
 	Double_node *rend() const;
-
 	Double_node *find(Type const &) const;
 	int count(Type const &) const;
 
 	// Mutators
-
 	void swap(Double_sentinel_list &);
 	Double_sentinel_list &operator=(Double_sentinel_list);
 	Double_sentinel_list &operator=(Double_sentinel_list &&);
-
 	void push_front(Type const &);
 	void push_back(Type const &);
-
 	void pop_front();
 	void pop_back();
-
 	int erase(Type const &);
 
-      private:
+private:
 	Double_node *list_head;
 	Double_node *list_tail;
 	int list_size;
@@ -86,7 +78,13 @@ template <typename Type>
 Double_sentinel_list<Type>::Double_sentinel_list(Double_sentinel_list<Type> &&list) {}
 
 template <typename Type>
-Double_sentinel_list<Type>::~Double_sentinel_list() {}
+Double_sentinel_list<Type>::~Double_sentinel_list() {
+	while (!empty())
+		pop_front();
+	delete list_head;
+	delete list_tail;
+	delete list_size;
+}
 
 template <typename Type>
 int Double_sentinel_list<Type>::size() const {
