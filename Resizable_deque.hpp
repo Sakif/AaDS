@@ -6,7 +6,7 @@
 
 template <typename Type>
 class Resizable_deque {
-      public:
+public:
 	Resizable_deque(int = 16);
 	Resizable_deque(Resizable_deque const &);
 	Resizable_deque(Resizable_deque &&);
@@ -27,7 +27,7 @@ class Resizable_deque {
 	void pop_back();
 	void clear();
 
-      private:
+private:
 	int ifront;
 	int iback;
 	int deque_size;
@@ -35,14 +35,16 @@ class Resizable_deque {
 	int array_capacity;
 	Type *array;
 
+	void doubleSize();
+	void halfSize();
+
 	template <typename T>
 	friend std::ostream &operator<<(std::ostream &, Resizable_deque<T> const &);
 };
 
 // Constructors
 template <typename Type>
-Resizable_deque<Type>::Resizable_deque(int n) {
-	/* The constructor takes as an argument the initial capacity of the array and allocates memory for that array. The initial array capacity must be 16 or more, with a default capacity of 16. If the user passes a value less than 16, use 16. Other member variables are assigned as appropriate. */
+Resizable_deque<Type>::Resizable_deque(int n) { /* The constructor takes as an argument the initial capacity of the array and allocates memory for that array. The initial array capacity must be 16 or more, with a default capacity of 16. If the user passes a value less than 16, use 16. Other member variables are assigned as appropriate. */
 	if (n < 16)
 		n = 16;
 	deque_size = 0;
@@ -63,28 +65,27 @@ Resizable_deque<Type>::Resizable_deque(Resizable_deque &&deque) {}
 
 // Destructor
 template <typename Type>
-Resizable_deque<Type>::~Resizable_deque() {
-	/* The destructor deletes the memory allocated for the array. */
+Resizable_deque<Type>::~Resizable_deque() { /* The destructor deletes the memory allocated for the array. */
 	delete array;
 }
 
 template <typename Type>
-int Resizable_deque<Type>::size() const {
+int Resizable_deque<Type>::size() const { /* Returns the number of elements currently stored in the deque. (O(1)) */
 	return deque_size;
 }
 
 template <typename Type>
-int Resizable_deque<Type>::capacity() const {
+int Resizable_deque<Type>::capacity() const { /* Returns the current capacity of the array. (O(1)) */
 	return array_capacity;
 }
 
 template <typename Type>
-bool Resizable_deque<Type>::empty() const {
+bool Resizable_deque<Type>::empty() const { /* Returns true if the deque is empty, false otherwise. (O(1)) */
 	return size() == 0;
 }
 
 template <typename Type>
-Type Resizable_deque<Type>::front() const {
+Type Resizable_deque<Type>::front() const { /* Return the object at the front of the deque. It may throw a underflow exception. (O(1)) */
 	if (empty())
 		throw underflow();
 	else {
@@ -93,7 +94,7 @@ Type Resizable_deque<Type>::front() const {
 }
 
 template <typename Type>
-Type Resizable_deque<Type>::back() const {
+Type Resizable_deque<Type>::back() const { /* Return the object at the back of the deque. It may throw a underflow exception. (O(1)) */
 	if (empty())
 		throw underflow();
 	else {
@@ -118,34 +119,78 @@ Resizable_deque<Type> &Resizable_deque<Type>::operator=(Resizable_deque<Type> &&
 }
 
 template <typename Type>
-void Resizable_deque<Type>::push_front(Type const &obj) {
-	/* Insert the new element at the front of the deque. If before the element is placed into the deque, the array is filled, the capacity of the array is doubled. (O(1) on average) */
+void Resizable_deque<Type>::push_front(Type const &obj) { /* Insert the new element at the front of the deque. If before the element is placed into the deque, the array is filled, the capacity of the array is doubled. (O(1) on average) */
 	deque_size++;
-	if (size() > capacity()) {
-		auto ar = new Type[capacity() * 2];
-		for (int i = 0, n = iback; i < capacity(); i++, n++) {
-			n %= capacity();
-			ar[i] = array[n];
-		}
-		iback = 0;
-		ifront = capacity() - 1;
-		array_capacity *= 2;
-	} else {
-		ifront++;
-		ifront %= capacity();
-		array[ifront] = obj;
+	if (size() > capacity())
+		doubleSize();
+	size() == 1 ? ifront = 0 : ifront++;
+	ifront %= capacity();
+	array[ifront] = obj;
+}
+
+template <typename Type>
+void Resizable_deque<Type>::push_back(Type const &obj) { /* Insert the new element at the back of the deque. If before the element is placed into the deque, the array is filled, the capacity of the array is doubled. (O(1) on average) */
+	deque_size++;
+	if (size() > capacity())
+		doubleSize();
+	iback--;
+	if (iback < 0)
+		iback += capacity();
+	array[iback] = obj;
+}
+
+template <typename Type>
+void Resizable_deque<Type>::doubleSize() {
+	auto ar = new Type[capacity() * 2];
+	for (int i = 0, n = iback; i < capacity(); i++, n++) {
+		n %= capacity();
+		ar[i] = array[n];
+	}
+	iback = 0;
+	ifront = capacity() - 1;
+	array_capacity *= 2;
+}
+
+template <typename Type>
+void Resizable_deque<Type>::pop_front() { /* Removes the element at the front of the deque. If, after the element is removed, the array is 1/4 full or less and the array capacity is greater than the initial capacity, the capacity of the array is halved. This may throw a underflow exception. (O(1) on average) */
+	if (empty())
+		throw underflow();
+	else {
+		deque_size--;
+		if (size() > initial_array_capacity && size() < capacity() / 4)
+			halfSize();
+		array[ifront] = Type();
+		ifront--;
+		if (ifront < 0)
+			ifront += capacity();
 	}
 }
 
 template <typename Type>
-void Resizable_deque<Type>::push_back(Type const &obj) {
+void Resizable_deque<Type>::pop_back() { /* Removes the element at the back of the deque. If, after the element is removed, the array is 1/4 full or less and the array capacity is greater than the initial capacity, the capacity of the array is halved. This may throw a underflow exception. (O(1) on average) */
+	if (empty())
+		throw underflow();
+	else {
+		deque_size--;
+		if (size() > initial_array_capacity && size() < capacity() / 4)
+			halfSize();
+		array[iback] = Type();
+		iback++;
+		iback %= capacity();
+	}
 }
 
 template <typename Type>
-void Resizable_deque<Type>::pop_front() {}
-
-template <typename Type>
-void Resizable_deque<Type>::pop_back() {}
+void Resizable_deque<Type>::halfSize() {
+	auto ar = new Type[capacity() / 2];
+	for (int i = 0, n = iback; i < capacity(); i++, n++) {
+		n %= capacity() / 2;
+		ar[i] = array[n];
+	}
+	iback = 0;
+	ifront = capacity() / 2 - 1;
+	array_capacity /= 2;
+}
 
 template <typename Type>
 void Resizable_deque<Type>::clear() {
