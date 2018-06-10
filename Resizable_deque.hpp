@@ -88,22 +88,27 @@ template <typename Type>
 Type Resizable_deque<Type>::front() const { /* Return the object at the front of the deque. It may throw a underflow exception. (O(1)) */
 	if (empty())
 		throw underflow();
-	else {
+	else
 		return array[ifront];
-	}
 }
 
 template <typename Type>
 Type Resizable_deque<Type>::back() const { /* Return the object at the back of the deque. It may throw a underflow exception. (O(1)) */
 	if (empty())
 		throw underflow();
-	else {
+	else
 		return array[iback];
-	}
 }
 
 template <typename Type>
-void Resizable_deque<Type>::swap(Resizable_deque<Type> &deque) {}
+void Resizable_deque<Type>::swap(Resizable_deque<Type> &deque) {
+	std::swap(array, deque.array);
+	std::swap(array_capacity, deque.array_capacity);
+	std::swap(deque_size, deque.deque_size);
+	std::swap(initial_array_capacity, deque.initial_array_capacity);
+	std::swap(ifront, deque.ifront);
+	std::swap(iback, deque.iback);
+}
 
 template <typename Type>
 Resizable_deque<Type> &Resizable_deque<Type>::operator=(Resizable_deque<Type> const &rhs) {
@@ -126,6 +131,9 @@ void Resizable_deque<Type>::push_front(Type const &obj) { /* Insert the new elem
 	size() == 1 ? ifront = 0 : ifront++;
 	ifront %= capacity();
 	array[ifront] = obj;
+	/* debug
+	std::cout << ifront << ", " << iback << "\n";
+	//*/
 }
 
 template <typename Type>
@@ -137,6 +145,9 @@ void Resizable_deque<Type>::push_back(Type const &obj) { /* Insert the new eleme
 	if (iback < 0)
 		iback += capacity();
 	array[iback] = obj;
+	/* debug
+	std::cout << ifront << ", " << iback << "\n";
+	//*/
 }
 
 template <typename Type>
@@ -149,6 +160,7 @@ void Resizable_deque<Type>::doubleSize() {
 	iback = 0;
 	ifront = capacity() - 1;
 	array_capacity *= 2;
+	array = ar;
 }
 
 template <typename Type>
@@ -183,18 +195,18 @@ void Resizable_deque<Type>::pop_back() { /* Removes the element at the back of t
 template <typename Type>
 void Resizable_deque<Type>::halfSize() {
 	auto ar = new Type[capacity() / 2];
-	for (int i = 0, n = iback; i < capacity(); i++, n++) {
-		n %= capacity() / 2;
+	for (int i = 0, n = iback; i < capacity() / 2; i++, n++) {
+		n %= capacity();
 		ar[i] = array[n];
 	}
 	iback = 0;
 	ifront = capacity() / 2 - 1;
 	array_capacity /= 2;
+	array = ar;
 }
 
 template <typename Type>
-void Resizable_deque<Type>::clear() {
-	/* Empties the deque by resetting the member variables. The array is resized to the initial capacity. (O(1)) */
+void Resizable_deque<Type>::clear() { /* Empties the deque by resetting the member variables. The array is resized to the initial capacity. (O(1)) */
 	deque_size = 0;
 	array_capacity = initial_array_capacity;
 	ifront = 0;
@@ -205,7 +217,7 @@ void Resizable_deque<Type>::clear() {
 
 template <typename T>
 std::ostream &operator<<(std::ostream &out, Resizable_deque<T> const &list) {
-	for (int i = 0; i < list.array_capacity; i++)
+	for (int i = 0; i < list.capacity(); i++)
 		out << list.array[i] << ", ";
 	return out;
 }
