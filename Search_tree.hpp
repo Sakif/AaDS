@@ -41,6 +41,7 @@ private:
 
 	Node *front_sentinel;
 	Node *back_sentinel;
+
 public:
 	class Iterator {
 	private:
@@ -117,9 +118,7 @@ int Search_tree<Type>::height() const {
 template <typename Type>
 Type Search_tree<Type>::front() const {
 	if (empty())
-		throw underflow();
-	
-
+		throw underflow();	
 	return root_node->front()->node_value;
 }
 
@@ -127,7 +126,6 @@ template <typename Type>
 Type Search_tree<Type>::back() const {
 	if (empty())
 		throw underflow();
-
 	return root_node->back()->node_value;
 }
 
@@ -155,9 +153,7 @@ template <typename Type>
 typename Search_tree<Type>::Iterator Search_tree<Type>::find(Type const &obj) {
 	if (empty())
 		return Iterator(this, back_sentinel);
-
-	typename Search_tree<Type>::Node *search_result = root_node->find(obj);
-
+	auto *search_result = root_node->find(obj);
 	if (search_result == nullptr)
 		return Iterator(this, back_sentinel);
 	else
@@ -171,7 +167,6 @@ void Search_tree<Type>::clear() {
 		root_node = nullptr;
 		tree_size = 0;
 	}
-
 	// Reinitialize the sentinels
 	front_sentinel->next_node = back_sentinel;
 	back_sentinel->previous_node = front_sentinel;
@@ -182,7 +177,6 @@ bool Search_tree<Type>::insert(Type const &obj) {
 	if (empty()) {
 		root_node = new Search_tree::Node(obj);
 		tree_size = 1;
-
 		return true;
 	} else if (root_node->insert(obj, root_node)) {
 		++tree_size;
@@ -247,14 +241,10 @@ typename Search_tree<Type>::Node *Search_tree<Type>::Node::find(Type const &obj)
 
 template <typename Type>
 void Search_tree<Type>::Node::clear() {
-	if (left_tree != nullptr) {
+	if (left_tree != nullptr)
 		left_tree->clear();
-	}
-
-	if (right_tree != nullptr) {
+	if (right_tree != nullptr)
 		right_tree->clear();
-	}
-
 	delete this;
 }
 
