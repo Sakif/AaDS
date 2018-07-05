@@ -5,3 +5,6 @@ deque:
 
 list:
 	$(CC) testList.cpp -o list.out
+
+clean:
+	rm -v *.out
