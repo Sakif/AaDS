@@ -8,6 +8,11 @@ template <typename Type>
 class Double_sentinel_list {
 public:
 	class Double_node {
+	private:
+		Type node_value;
+		Double_node *previous_node;
+		Double_node *next_node;
+
 	public:
 		Double_node(Type const & = Type(), Double_node * = nullptr, Double_node * = nullptr);
 
@@ -15,9 +20,7 @@ public:
 		Double_node *previous() const;
 		Double_node *next() const;
 
-		Type node_value;
-		Double_node *previous_node;
-		Double_node *next_node;
+		friend class Double_sentinel_list;
 	};
 
 	Double_sentinel_list();

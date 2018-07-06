@@ -7,9 +7,6 @@
 
 template <typename Type>
 class Search_tree {
-public:
-	class Iterator;
-
 private:
 	class Node {
 	public:
@@ -88,8 +85,8 @@ template <typename Type>
 Search_tree<Type>::Search_tree() {
 	root_node = nullptr;
 	tree_size = 0;
-	front_sentinel(new Search_tree::Node(Type()));
-	back_sentinel(new Search_tree::Node(Type()));
+	front_sentinel = new Search_tree::Node(Type());
+	back_sentinel = new Search_tree::Node(Type());
 	front_sentinel->next_node = back_sentinel;
 	back_sentinel->previous_node = front_sentinel;
 }
@@ -118,20 +115,21 @@ int Search_tree<Type>::height() const {
 
 template <typename Type>
 Type Search_tree<Type>::front() const {
-	if (empty()) throw underflow();
+	if (empty())
+		throw underflow();
 	return root_node->front()->node_value;
 }
 
 template <typename Type>
 Type Search_tree<Type>::back() const {
-	if (empty()) throw underflow();
+	if (empty())
+		throw underflow();
 	return root_node->back()->node_value;
 }
 
 template <typename Type>
 typename Search_tree<Type>::Iterator Search_tree<Type>::begin() {
-	return empty() ? Iterator(this, back_sentinel)
-		       : Iterator(this, root_node->front());
+	return empty() ? Iterator(this, back_sentinel) : Iterator(this, root_node->front());
 }
 
 template <typename Type>
@@ -141,8 +139,7 @@ typename Search_tree<Type>::Iterator Search_tree<Type>::end() {
 
 template <typename Type>
 typename Search_tree<Type>::Iterator Search_tree<Type>::rbegin() {
-	return empty() ? Iterator(this, front_sentinel)
-		       : Iterator(this, root_node->back());
+	return empty() ? Iterator(this, front_sentinel) : Iterator(this, root_node->back());
 }
 
 template <typename Type>
@@ -152,7 +149,8 @@ typename Search_tree<Type>::Iterator Search_tree<Type>::rend() {
 
 template <typename Type>
 typename Search_tree<Type>::Iterator Search_tree<Type>::find(Type const &obj) {
-	if (empty()) return Iterator(this, back_sentinel);
+	if (empty())
+		return Iterator(this, back_sentinel);
 	auto *search_result = root_node->find(obj);
 	if (search_result == nullptr)
 		return Iterator(this, back_sentinel);
@@ -167,7 +165,6 @@ void Search_tree<Type>::clear() {
 		root_node = nullptr;
 		tree_size = 0;
 	}
-	// Reinitialize the sentinels
 	front_sentinel->next_node = back_sentinel;
 	back_sentinel->previous_node = front_sentinel;
 }
@@ -195,9 +192,14 @@ bool Search_tree<Type>::erase(Type const &obj) {
 }
 
 template <typename Type>
-Search_tree<Type>::Node::Node(Type const &obj)
-    : node_value(obj), left_tree(nullptr), right_tree(nullptr),
-      next_node(nullptr), previous_node(nullptr), tree_height(0) {}
+Search_tree<Type>::Node::Node(Type const &obj) {
+	tree_height = 0;
+	previous_node = nullptr;
+	next_node = nullptr;
+	right_tree = nullptr;
+	left_tree = nullptr;
+	node_value = obj;
+}
 
 template <typename Type>
 void Search_tree<Type>::Node::update_height() {
@@ -225,28 +227,26 @@ typename Search_tree<Type>::Node *Search_tree<Type>::Node::back() {
 }
 
 template <typename Type>
-typename Search_tree<Type>::Node *
-Search_tree<Type>::Node::find(Type const &obj) {
-	if (obj == node_value) {
+typename Search_tree<Type>::Node *Search_tree<Type>::Node::find(Type const &obj) {
+	if (obj == node_value)
 		return this;
-	} else if (obj < node_value) {
+	else if (obj < node_value)
 		return (left_tree == nullptr) ? nullptr : left_tree->find(obj);
-	} else {
-		return (right_tree == nullptr) ? nullptr
-					       : right_tree->find(obj);
-	}
+	else
+		return (right_tree == nullptr) ? nullptr : right_tree->find(obj);
 }
 
 template <typename Type>
 void Search_tree<Type>::Node::clear() {
-	if (left_tree != nullptr) left_tree->clear();
-	if (right_tree != nullptr) right_tree->clear();
+	if (left_tree != nullptr)
+		left_tree->clear();
+	if (right_tree != nullptr)
+		right_tree->clear();
 	delete this;
 }
 
 template <typename Type>
-bool Search_tree<Type>::Node::insert(Type const &obj,
-				     Search_tree<Type>::Node *&to_this) {
+bool Search_tree<Type>::Node::insert(Type const &obj, Search_tree<Type>::Node *&to_this) {
 	if (obj < node_value) {
 		if (left_tree == nullptr) {
 			left_tree = new Search_tree<Type>::Node(obj);
@@ -280,8 +280,7 @@ bool Search_tree<Type>::Node::insert(Type const &obj,
 }
 
 template <typename Type>
-bool Search_tree<Type>::Node::erase(Type const &obj,
-				    Search_tree<Type>::Node *&to_this) {
+bool Search_tree<Type>::Node::erase(Type const &obj, Search_tree<Type>::Node *&to_this) {
 	if (obj < node_value) {
 		if (left_tree == nullptr)
 			return false;
@@ -323,9 +322,10 @@ bool Search_tree<Type>::Node::erase(Type const &obj,
 }
 
 template <typename Type>
-Search_tree<Type>::Iterator::Iterator(
-    Search_tree<Type> *tree, typename Search_tree<Type>::Node *starting_node)
-    : containing_tree(tree), current_node(starting_node) {}
+Search_tree<Type>::Iterator::Iterator(Search_tree<Type> *tree, typename Search_tree<Type>::Node *starting_node) {
+	containing_tree = tree;
+	current_node = starting_node;
+}
 
 template <typename Type>
 Type Search_tree<Type>::Iterator::operator*() const {
@@ -333,14 +333,12 @@ Type Search_tree<Type>::Iterator::operator*() const {
 }
 
 template <typename Type>
-typename Search_tree<Type>::Iterator &Search_tree<Type>::Iterator::
-operator++() {
+typename Search_tree<Type>::Iterator &Search_tree<Type>::Iterator::operator++() {
 	return *this;
 }
 
 template <typename Type>
-typename Search_tree<Type>::Iterator &Search_tree<Type>::Iterator::
-operator--() {
+typename Search_tree<Type>::Iterator &Search_tree<Type>::Iterator::operator--() {
 	return *this;
 }
 

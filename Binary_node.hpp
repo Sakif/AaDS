@@ -15,7 +15,7 @@ public:
 	bool is_leaf() const;
 	int size() const;
 	int height() const;
-	void clear(Binary_node *&p_to_this);
+	void clear(Binary_node *&);
 };
 
 template <typename Type>
@@ -52,7 +52,7 @@ int Binary_node<Type>::size() const {
 		return (right() == nullptr) ? 1 : 1 + right()->size();
 	/* same as above condition but with a size call on left node even if there is no right node */
 	else
-		return (right() == nullptr) ? 1 + left()->size() : 1 + right()->size();
+		return (right() == nullptr) ? 1 + left()->size() : 1 + left()->size() + right()->size();
 }
 
 template <typename Type>
@@ -62,7 +62,7 @@ int Binary_node<Type>::height() const {
 		return (right() == nullptr) ? 0 : 1 + right()->height();
 	/* same as above condition but with a size call on left node even if there is no right node */
 	else
-		return (right() == nullptr) ? 1 + left()->size() : 1 + right()->size();
+		return (right() == nullptr) ? 1 + left()->height() : 1 + left()->height() + right()->height();
 }
 
 template <typename Type>
