@@ -12,23 +12,17 @@ private:
 	public:
 		Type node_value;
 		int tree_height;
-
 		Node *left_tree;
 		Node *right_tree;
-
 		Node *previous_node;
 		Node *next_node;
-
 		Node(Type const & = Type());
-
 		void update_height();
-
 		int height() const;
 		bool is_leaf() const;
 		Node *front();
 		Node *back();
 		Node *find(Type const &obj);
-
 		void clear();
 		bool insert(Type const &obj, Node *&to_this);
 		bool erase(Type const &obj, Node *&to_this);
@@ -251,29 +245,25 @@ bool Search_tree<Type>::Node::insert(Type const &obj, Search_tree<Type>::Node *&
 		if (left_tree == nullptr) {
 			left_tree = new Search_tree<Type>::Node(obj);
 			update_height();
-
 			return true;
 		} else {
 			if (left_tree->insert(obj, left_tree)) {
 				update_height();
 				return true;
-			} else {
+			} else
 				return false;
-			}
 		}
 	} else if (obj > node_value) {
 		if (right_tree == nullptr) {
 			right_tree = new Search_tree<Type>::Node(obj);
 			update_height();
-
 			return true;
 		} else {
 			if (right_tree->insert(obj, right_tree)) {
 				update_height();
 				return true;
-			} else {
+			} else
 				return false;
-			}
 		}
 	} else
 		return false;

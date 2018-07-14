@@ -1,76 +1,143 @@
+#ifndef AVL_TREE_H
+#define AVL_TREE_H
+
 #include <algorithm>
 
 template <typename Type>
-class Binary_node {
-protected:
-	Type node_value;
-	Binary_node *left_tree;
-	Binary_node *right_tree;
+class AVL_tree {
+private:
+	class Node {
+	private:
+		Type node_value;
+		Node *left_tree;
+		Node *right_tree;
+		int tree_height;
+
+	public:
+		Node(Type const & = Type());
+
+		Type value() const;
+		Node *left() const;
+		Node *right() const;
+		bool is_leaf() const;
+		int height() const;
+		Node *find(Type const &obj) const;
+
+		void clear();
+		void update_height();
+		bool insert(Type const &obj, Node *&to_this);
+		friend class AVL_tree;
+	};
+	Node *root_node;
+	int tree_size;
 
 public:
-	Binary_node(Type const &);
-	Type value() const;
-	Binary_node *left() const;
-	Binary_node *right() const;
-	bool is_leaf() const;
+	AVL_tree();
 	int size() const;
-	int height() const;
-	void clear(Binary_node *&);
+	bool empty() const;
 };
 
 template <typename Type>
-Binary_node<Type>::Binary_node(Type const &obj) {
+void AVL_tree<Type>::Node::update_height() {
+	tree_height = std::max(left()->height(), right()->height()) + 1;
+}
+
+template <typename Type>
+AVL_tree<Type>::Node::Node(Type const &obj) {
 	node_value = obj;
+	tree_height = 0;
 	left_tree = nullptr;
 	right_tree = nullptr;
 }
 
 template <typename Type>
-Type Binary_node<Type>::value() const {
+Type AVL_tree<Type>::Node::value() const {
 	return node_value;
 }
 
 template <typename Type>
-Binary_node<Type> *Binary_node<Type>::left() const {
+typename AVL_tree<Type>::Node *AVL_tree<Type>::Node::left() const {
 	return left_tree;
 }
 
 template <typename Type>
-Binary_node<Type> *Binary_node<Type>::right() const {
+typename AVL_tree<Type>::Node *AVL_tree<Type>::Node::right() const {
 	return right_tree;
 }
 
 template <typename Type>
-bool Binary_node<Type>::is_leaf() const {
-	return ((left() == nullptr) && (right() == nullptr));
+bool AVL_tree<Type>::Node::is_leaf() const {
+	return (left() == nullptr && right() == nullptr);
 }
 
 template <typename Type>
-int Binary_node<Type>::size() const {
-	/* where there is no left node: check if there is a right node, if none return 1; else call size on the right node and +1 for the current node */
-	if (left() == nullptr)
-		return (right() == nullptr) ? 1 : 1 + right()->size();
-	/* same as above condition but with a size call on left node even if there is no right node */
+int AVL_tree<Type>::Node::height() const {
+	return (this == nullptr) ? -1 : tree_height;
+}
+
+template <typename Type>
+typename AVL_tree<Type>::Node *AVL_tree<Type>::Node::find(const Type &obj) const {
+	if (value() == obj)
+		return this;
+	else if (obj < value())
+		return (left() == nullptr) ? nullptr : left()->find(obj);
 	else
-		return (right() == nullptr) ? 1 + left()->size() : 1 + left()->size() + right()->size();
+		return (right() == nullptr) ? nullptr : right()->find(obj);
 }
 
 template <typename Type>
-int Binary_node<Type>::height() const {
-	/* where there is no left node: check if there is a right node, if none return 0; else call size on the right node and +1 for the current node */
-	if (left() == nullptr)
-		return (right() == nullptr) ? 0 : 1 + right()->height();
-	/* same as above condition but with a size call on left node even if there is no right node */
-	else
-		return (right() == nullptr) ? 1 + left()->height() : 1 + left()->height() + right()->height();
-}
-
-template <typename Type>
-void Binary_node<Type>::clear(Binary_node<Type> *&p_to_this) {
+void AVL_tree<Type>::Node::clear() {
 	if (left() != nullptr)
-		left()->clear(left_tree);
+		left_tree->clear();
 	if (right() != nullptr)
-		right()->clear(right_tree);
+		right_tree->clear();
 	delete this;
-	p_to_this = nullptr;
 }
+
+template <typename Type>
+bool AVL_tree<Type>::Node::insert(const Type &obj, Node *&to_this) {
+	if (obj < node_value) {
+		if (left() == nullptr) {
+			left_tree = new Node(obj);
+			update_height();
+			return true;
+		} else {
+			if (left()->insert(obj, left())) {
+				update_height();
+				return true;
+			} else
+				return false;
+		}
+	} else if (obj > node_value) {
+		if (right() == nullptr) {
+			right_tree = new Node(obj);
+			update_height();
+			return true;
+		} else {
+			if (right()->insert(obj, right())) {
+				update_height();
+				return true;
+			} else
+				return false;
+		}
+	} else
+		return false;
+}
+
+template <typename Type>
+bool AVL_tree<Type>::empty() const {
+	return size() == 0;
+}
+
+template <typename Type>
+int AVL_tree<Type>::size() const {
+	return tree_size;
+}
+
+template <typename Type>
+AVL_tree<Type>::AVL_tree() {
+	root_node = nullptr;
+	tree_size = 0;
+}
+
+#endif

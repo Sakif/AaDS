@@ -497,7 +497,7 @@ void check_array_bounds(char *ptr, size_t size) {
  * Return the pointer to the user.
  ****************************************************************************/
 
-void *operator new(size_t size) throw(std::bad_alloc) {
+void *operator new(size_t size) {
 	void *ptr = malloc(size);
 	ece250::allocation_table.insert(ptr, size, false);
 	return static_cast<void *>(ptr);
@@ -536,7 +536,7 @@ void operator delete(void *ptr) throw() {
  * Return the pointer to the user.
  ****************************************************************************/
 
-void *operator new[](size_t size) throw(std::bad_alloc) {
+void *operator new[](size_t size) {
 	char *ptr = static_cast<char *>(malloc(size + 2 * ece250::PAD));
 	ece250::allocation_table.insert(static_cast<void *>(ptr + ece250::PAD), size, true);
 	ece250::initialize_array_bounds(ptr, size + 2 * ece250::PAD);
