@@ -21,6 +21,7 @@ private:
 
 public:
 	Hash_Table(int = 5);
+	~Hash_Table();
 	int size() const;
 	int capacity() const;
 	double load_factor() const;
@@ -44,6 +45,12 @@ Hash_Table<Type>::Hash_Table(int m) {
 	occupied = new bin_state_t[array_size];
 	for (int i = 0; i < array_size; i++)
 		occupied[i] = UNOCCUPIED;
+}
+
+template <typename Type>
+Hash_Table<Type>::~Hash_Table() {
+	delete array;
+	delete occupied;
 }
 
 template <typename Type>
@@ -101,6 +108,7 @@ bool Hash_Table<Type>::erace(const Type &obj) {
 	else {
 		occupied[i] = ERASED;
 		count--;
+		return true;
 	}
 }
 
@@ -129,4 +137,5 @@ void Hash_Table<Type>::print() const {
 		else
 			std::cout << "UNOCCUPIED, ";
 	}
+	std::cout << "\n";
 }
