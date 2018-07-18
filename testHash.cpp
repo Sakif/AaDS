@@ -17,5 +17,6 @@ int main() {
 	cout << "Bin 29: " << hash.bin(29) << endl;
 	cout << "Bin 10: " << hash.bin(10) << endl;
 	cout << "Bin 1: " << hash.bin(1) << endl;
+	cout << "Load Factor: " << hash.load_factor() << endl;
 	return 0;
 }

@@ -30,6 +30,7 @@ public:
 	void print() const;
 
 	void insert(Type const &);
+	bool erace(Type const &);
 	void clear();
 };
 
@@ -49,6 +50,7 @@ template <typename Type>
 void Hash_Table<Type>::clear() {
 	for (int i = 0; i < array_size; i++)
 		occupied[i] = UNOCCUPIED;
+	count = 0;
 }
 
 template <typename Type>
@@ -82,7 +84,24 @@ bool Hash_Table<Type>::member(const Type &obj) const {
 
 template <typename Type>
 Type Hash_Table<Type>::bin(int n) const {
-	return array[n];
+	if (occupied[n] == OCCUPIED)
+		return array[n];
+	else
+		return 0;
+}
+
+template <typename Type>
+bool Hash_Table<Type>::erace(const Type &obj) {
+	int i = static_cast<int>(obj);
+	i %= capacity();
+	if (i < 0)
+		i += capacity();
+	if (occupied[i] != OCCUPIED)
+		return false;
+	else {
+		occupied[i] = ERASED;
+		count--;
+	}
 }
 
 template <typename Type>
