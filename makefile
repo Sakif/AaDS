@@ -1,5 +1,8 @@
 CC = g++ -std=c++17
 
+hash:
+	$(CC) testHash.cpp -o hash.out
+
 tree:
 	$(CC) testTree.cpp -o tree.out
 
