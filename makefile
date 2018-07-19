@@ -1,4 +1,7 @@
-CC = g++ -std=c++17
+CC = clang++ -std=c++17
+
+merge:
+	$(CC) testMerge.cpp -o sort.out
 
 hash:
 	$(CC) testHash.cpp -o hash.out
