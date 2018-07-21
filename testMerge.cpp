@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <cstdlib>
+#include <ctime>
 #include <iostream>
 
 using namespace std;
@@ -49,9 +50,11 @@ int main() {
 	int arr[arr_size];
 	for (int i = 0; i < arr_size; i++)
 		arr[i] = rand() % 1000000;
+	clock_t begin = clock();
 
-	//printArray(arr, arr_size);
 	mergeSort(arr, 0, arr_size - 1);
-	//printArray(arr, arr_size);
+	clock_t end = clock();
+	double delta_time = double(end - begin) / CLOCKS_PER_SEC;
+	cout << "Ellapsed time: " << delta_time << endl;
 	return 0;
 }
