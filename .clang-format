@@ -1,0 +1,10 @@
+---
+IndentWidth: 8
+UseTab: Always
+AccessModifierOffset: -8
+BreakBeforeBraces: WebKit
+IndentCaseLabels: false
+AlwaysBreakAfterDefinitionReturnType: false
+AlwaysBreakTemplateDeclarations: true
+BreakBeforeBraces: Attach
+ColumnLimit: 0
