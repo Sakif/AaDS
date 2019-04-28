@@ -1,5 +1,7 @@
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.10)
 
-project(AADS)
+    project(AADS)
 
-add_executable(dslist listTest.cpp)
+        set(CMAKE_CXX_STANDARD 17)
+
+            add_executable(dslist listTest.cpp)
