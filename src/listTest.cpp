@@ -45,12 +45,31 @@ int main() {
   list.pushFront(5);
   list.pushFront(3);
 
-  cout << list << endl;
+  cout << "List 2" << endl;
   auto list2 = list;
-  cout << list2 << endl;
+  cout << "Size: " << list2.size() << endl;
+  cout << "Front (3): " << list2.front() << endl;
+  cout << "Back (9): " << list2.back() << endl;
+  list2.pushFront(1);
+  cout << "Size: " << list2.size() << endl;
+  cout << "Front (1): " << list2.front() << endl;
   list2.popBack();
   list2.popFront();
-  cout << list2 << endl;
-  cout << list << endl;
+  cout << "End of List 2" << endl;
+
+  cout << "Size: " << list.size() << endl;
+  cout << "Front (3): " << list.front() << endl;
+  while (!list.empty())
+    list.popBack();
+  cout << "Size: " << list.size() << endl;
+  node = list.begin();
+  cout << "Node next: " << (node->next() == nullptr ? "✓" : "✗") << endl;
+  node = node->previous();
+  cout << "Node previous: " << (node->previous() == nullptr ? "✓" : "✗") << endl;
+  list.pushFront(7);
+  list.pushFront(3);
+  list.pushBack(9);
+  list.pushBack(11);
+  cout << "Size: " << list.size() << endl;
   return 0;
 }
