@@ -39,5 +39,18 @@ int main() {
   cout << "Erase 5: " << list.erase(5) << endl;
   cout << "Empty: " << list.empty() << endl;
   cout << "Size: " << list.size() << endl;
+
+  list.pushFront(9);
+  list.pushFront(7);
+  list.pushFront(5);
+  list.pushFront(3);
+
+  cout << list << endl;
+  auto list2 = list;
+  cout << list2 << endl;
+  list2.popBack();
+  list2.popFront();
+  cout << list2 << endl;
+  cout << list << endl;
   return 0;
 }

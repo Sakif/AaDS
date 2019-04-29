@@ -40,6 +40,9 @@ public:
   Type popBack();
 
   int erase(Type const &);
+
+  template <typename T>
+  friend std::ostream &operator<<(std::ostream &, doubleSentinelList<T> const &);
 };
 
 template <typename Type> /* The constructor creates two instances of a Double_node<Type> (called the sentinels). The head and tail pointers are set to point to one of the sentinels, each. The values stored in these nodes is not important, you can use the default value or whatever values you want. The previous and next pointers of the head sentinel should be nullptr and the address of the tail sentinel, respectively. The previous and next pointers of the tail sentinel should be address of the head sentinel and nullptr, respectively. The node count is set to 0. */
@@ -58,7 +61,7 @@ doubleSentinelList<Type>::~doubleSentinelList() {
 template <typename Type> /* The copy constructor must create a new doubly linked list with a copy of all of the nodes within the linked list pass as the argument list with the values stored in the same order. The linked list passed as an argument may not be changed. Once a copy is made, any change to the original linked list must not affect the copy. */
 doubleSentinelList<Type>::doubleSentinelList(doubleSentinelList const &other) : listSize(0), listHead(new doubleNode<Type>()), listTail(new doubleNode<Type>(0, listHead, nullptr)) {
   listHead->nextNode = listTail;
-  for (auto node = other->begin(); node != other->end(); node = node->next())
+  for (auto node = other.begin(); node != other.end(); node = node->next())
     pushBack(node->value());
 }
 
@@ -168,6 +171,26 @@ int doubleSentinelList<Type>::erase(const Type &obj) {
     }
   }
   return killCount;
+}
+
+template <typename T>
+std::ostream &operator<<(std::ostream &out, doubleSentinelList<T> const &list) {
+  out << "H→T:";
+  for (auto ptr = list.rend(); ptr != nullptr; ptr = ptr->next()) {
+    if (ptr == list.rend() || ptr == list.end())
+      out << "→S";
+    else
+      out << "→" << ptr->value();
+  }
+  out << "→0\nT→H:";
+  for (auto ptr = list.end(); ptr != nullptr; ptr = ptr->previous()) {
+    if (ptr == list.rend() || ptr == list.end())
+      out << "→S";
+    else
+      out << "→" << ptr->value();
+  }
+  out << "→0";
+  return out;
 }
 
 #endif
