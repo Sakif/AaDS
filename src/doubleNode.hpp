@@ -1,6 +1,8 @@
 #ifndef DOUBLE_NODE_H
 #define DOUBLE_NODE_H
 
+#include <iostream>
+
 template <typename Type>
 class doubleSentinelList;
 
@@ -14,7 +16,7 @@ private:
 public:
   doubleNode(Type const & = Type(), doubleNode * = nullptr, doubleNode * = nullptr);
 
-  Type retrieve() const;
+  Type value() const;
   doubleNode *previous() const;
   doubleNode *next() const;
 
@@ -25,7 +27,7 @@ template <typename Type>
 doubleNode<Type>::doubleNode(Type const &e, doubleNode<Type> *p, doubleNode<Type> *n) : element(e), previousNode(p), nextNode(n) {}
 
 template <typename Type>
-Type doubleNode<Type>::retrieve() const { return element; }
+Type doubleNode<Type>::value() const { return element; }
 
 template <typename Type>
 doubleNode<Type> *doubleNode<Type>::previous() const { return previousNode; }

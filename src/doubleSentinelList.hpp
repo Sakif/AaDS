@@ -3,6 +3,7 @@
 
 #include "doubleNode.hpp"
 #include "exception.hpp"
+#include <iostream>
 
 template <typename Type>
 class doubleSentinelList {
@@ -71,14 +72,14 @@ template <typename Type> /* Retrieves the object stored in the node pointed to b
 Type doubleSentinelList<Type>::front() const {
   if (empty())
     throw underflow();
-  return begin()->retrieve();
+  return begin()->value();
 }
 
 template <typename Type> /* Retrieves the object stored in the node pointed to by the previous pointer of the tail sentinel. This function throws a underflow if the list is empty. */
 Type doubleSentinelList<Type>::back() const {
   if (empty())
     throw underflow();
-  return rbegin()->retrieve();
+  return rbegin()->value();
 }
 
 template <typename Type> /* Returns the address stored by the next pointer of the head sentinel node. */
@@ -152,11 +153,11 @@ Type doubleSentinelList<Type>::popBack() {
   return value;
 }
 
-template <typename Type>
+template <typename Type> /* Delete all the nodes in the linked list that have a value equal to the argument value (use == to to test for equality with the retrieved element). Update the previous and next pointers of any other node (including possibly the sentinels) within the list. Return the number of nodes that were deleted. */
 int doubleSentinelList<Type>::erase(const Type &obj) {
   int killCount = 0;
   for (auto node = begin(); node != end(); node = node->next()) {
-    if (node->retreive() == obj) {
+    if (node->value() == obj) {
       auto temp = node;
       node = node->previous();
       node->nextNode = temp->next();
