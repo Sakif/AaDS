@@ -12,6 +12,8 @@ private:
   doubleNode<Type> *listTail;
   int listSize;
 
+  void quickSort(doubleNode<Type> *, doubleNode<Type> *);
+
 public:
   doubleSentinelList();
   ~doubleSentinelList();
@@ -38,6 +40,8 @@ public:
 
   Type popFront();
   Type popBack();
+
+  void sort();
 
   int erase(Type const &);
 
@@ -182,7 +186,8 @@ std::ostream &operator<<(std::ostream &out, doubleSentinelList<T> const &list) {
     else
       out << "→" << ptr->value();
   }
-  out << "→0\nT→H:";
+  out << "→0" << std::endl
+      << "T→H:";
   for (auto ptr = list.end(); ptr != nullptr; ptr = ptr->previous()) {
     if (ptr == list.rend() || ptr == list.end())
       out << "→S";
@@ -191,6 +196,25 @@ std::ostream &operator<<(std::ostream &out, doubleSentinelList<T> const &list) {
   }
   out << "→0";
   return out;
+}
+
+template <typename Type>
+void doubleSentinelList<Type>::sort() {
+  if (empty())
+    throw underflow();
+  quickSort(listHead, listTail);
+}
+
+template <typename Type>
+void doubleSentinelList<Type>::quickSort(doubleNode<Type> *left, doubleNode<Type> *right) {
+  auto ptr = left->next();
+  auto pivot = right;
+  if (ptr == pivot)
+    return;
+  while (ptr->next() != pivot) {
+    if (ptr->value() > pivot->value()) {
+    }
+  }
 }
 
 #endif
