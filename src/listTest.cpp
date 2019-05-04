@@ -18,6 +18,7 @@ int main() {
   list.pushBack(4);
   cout << list << endl;
   list.sort();
+  cout << "Sorted list" << endl;
   cout << list << endl;
   return 0;
 }

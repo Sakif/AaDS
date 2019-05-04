@@ -11,7 +11,6 @@ private:
   doubleNode<Type> *listHead;
   doubleNode<Type> *listTail;
   int listSize;
-
   void quickSort(doubleNode<Type> *, doubleNode<Type> *);
 
 public:
@@ -22,27 +21,21 @@ public:
   /* Accessors */
   int size() const;
   bool empty() const;
-
   Type front() const;
   Type back() const;
-
   doubleNode<Type> *begin() const;
   doubleNode<Type> *end() const;
   doubleNode<Type> *rbegin() const;
   doubleNode<Type> *rend() const;
-
   int count(Type const &) const;
   doubleNode<Type> *find(Type const &) const;
 
   /* Mutators */
   void pushFront(Type const &);
   void pushBack(Type const &);
-
   Type popFront();
   Type popBack();
-
   void sort();
-
   int erase(Type const &);
 
   template <typename T>
@@ -208,13 +201,24 @@ void doubleSentinelList<Type>::sort() {
 template <typename Type>
 void doubleSentinelList<Type>::quickSort(doubleNode<Type> *left, doubleNode<Type> *right) {
   auto ptr = left->next();
-  auto pivot = right;
+  auto pivot = right->previous();
   if (ptr == pivot)
     return;
   while (ptr->next() != pivot) {
     if (ptr->value() > pivot->value()) {
+      auto node = ptr;
+      ptr = ptr->previous();
+      ptr->nextNode = node->next();
+      node->next()->previousNode = ptr;
+      node->previousNode = right->previous();
+      node->nextNode = right;
+      right->previous()->nextNode = node;
+      right->previousNode = node;
     }
+    ptr = ptr->next();
   }
+  quickSort(left, pivot);
+  quickSort(pivot, right);
 }
 
 #endif
