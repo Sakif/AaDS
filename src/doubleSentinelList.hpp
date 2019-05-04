@@ -200,22 +200,21 @@ void doubleSentinelList<Type>::sort() {
 
 template <typename Type>
 void doubleSentinelList<Type>::quickSort(doubleNode<Type> *left, doubleNode<Type> *right) {
-  auto ptr = left->next();
-  auto pivot = right->previous();
-  if (ptr == pivot)
+  if (left->next()->next() == right || left->next() == right)
     return;
-  while (ptr->next() != pivot) {
-    if (ptr->value() > pivot->value()) {
-      auto node = ptr;
-      ptr = ptr->previous();
-      ptr->nextNode = node->next();
-      node->next()->previousNode = ptr;
-      node->previousNode = right->previous();
-      node->nextNode = right;
-      right->previous()->nextNode = node;
-      right->previousNode = node;
+  auto pivot = right->previous();
+  for (auto node = left->next(); node != pivot; node = node->next()) {
+    if (node->value() > pivot->value()) {
+      auto temp = node;
+      node = node->previous();
+      node->nextNode = temp->next();
+      temp->next()->previousNode = node;
+
+      temp->previousNode = right->previous();
+      temp->nextNode = right;
+      right->previous()->nextNode = temp;
+      right->previousNode = temp;
     }
-    ptr = ptr->next();
   }
   quickSort(left, pivot);
   quickSort(pivot, right);
