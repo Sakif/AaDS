@@ -11,11 +11,13 @@ int main() {
   list.pushBack(7);
   list.pushBack(2);
   list.pushBack(1);
+  list.pushBack(12);
   list.pushBack(6);
   list.pushBack(8);
   list.pushBack(5);
   list.pushBack(3);
   list.pushBack(4);
+  list.pushBack(34);
   cout << list << endl;
   list.sort();
   cout << "Sorted list" << endl;
