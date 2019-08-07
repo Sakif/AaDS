@@ -1,6 +1,5 @@
 #include "main.h"
 
-
 // short int counter;
 // short int PC;
 
@@ -23,6 +22,5 @@
 //     }
 // }
 
-int main(){
-
+int main() {
 }
