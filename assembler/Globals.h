@@ -17,6 +17,7 @@
 #define BYTE_MIN 0
 #define BYTE_INCREASE 1
 #define WORD_INCREASE 2
+#define TOTAL_REGISTER 8
 
 using namespace std;
 
@@ -47,7 +48,6 @@ enum Error_T {
   INVALID_NUMBER,                //the string is not a valid number - compare with INVALID_OPERAND???
   INVALID_RECORD                 //too many tokens
 };
-
 struct Symbol {
   string name; //name of the symbol
   string type; //SymbolType type; //label (LBL), register (REG) or unknown (UNK)
@@ -58,8 +58,7 @@ struct Inst {                          //instruction
   string mnemonic;                     //mnemonic of the instruction
   string opcode;                       //most significant binary bits of this mnemonic -stored as string to join rest of the bits to create full opcode
   vector<Operand_T> expected_operands; //rule for the expected operands for this instruction
-
-  //Inst(string m, string o, vector<Operand_T> e):mnemonic(m), opcode(o),expected_operands(e){}
+                                       //Inst(string m, string o, vector<Operand_T> e):mnemonic(m), opcode(o),expected_operands(e){}
 };
 
 //global vars
@@ -68,16 +67,13 @@ extern bool has_error;
 extern vector<Inst> inst_set; //instruction set - global scope
 extern ofstream ofs;
 const vector<string> directives = {"ALIGN", "BSS", "BYTE", "END", "EQU", "ORG", "WORD"};
-enum directiveIndexes {
-  dirALIGN,
-  dirBSS,
-  dirBYTE,
-  dirEND,
-  dirEQU,
-  dirORG,
-  dirWORD
-};
-
+enum directiveIndexes { dirALIGN,
+                        dirBSS,
+                        dirBYTE,
+                        dirEND,
+                        dirEQU,
+                        dirORG,
+                        dirWORD };
 const vector<string> cecs = {"EQ", "NE", "CS", "HS", "CC", "LO", "MI", "PL", "VS", "VC", "HI", "LS", "GE", "LT", "GT", "LE", "AL"};
 const vector<unsigned short int> cec_values = {0, 1, 2, 2, 3, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 extern vector<Symbol> sym_tab;

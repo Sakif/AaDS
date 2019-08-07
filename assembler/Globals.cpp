@@ -91,7 +91,6 @@ short int check_if_instruction(string s) {
 /* returns the index of the directive, if present in the directives */
 short int check_if_directive(string s) {
   short int flag = INVALID_INDEX;
-
   for (unsigned short int i = 0; i < directives.size(); ++i) {
     string d = directives[i];
     bool b = (d.size() == s.size()) && (equal(d.begin(), d.end(), s.begin(), [](char &c1, char &c2) { return toupper(c1) == toupper(c2); }));
@@ -100,7 +99,6 @@ short int check_if_directive(string s) {
       break;
     }
   }
-
   return flag;
 }
 
@@ -209,7 +207,7 @@ void init_globals(string src_fname, string inst_fname /* = "instructions.txt"*/)
   //cecs = {"EQ","NE","CS","HS","CC","LO","MI","PL","VS","VC","HI","LS","GE","LT","GT","LE","AL"};
   //initialize symbol table and populate with the default registers
   sym_tab = {};
-  for (short int i = 0; i < 8; ++i) {
+  for (short int i = 0; i < TOTAL_REGISTER; ++i) {
     sym_tab.insert(sym_tab.begin(), Symbol{"R" + to_string(i), "REG", i});
   }
 

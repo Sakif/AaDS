@@ -1,0 +1,65 @@
+\documentclass[titlepage, 10pt]{article}
+\usepackage[margin=1in, letterpaper]{geometry}
+\usepackage{listings, float, graphicx}
+\lstset{basicstyle=\ttfamily, numbers=left, stepnumber=1, showstringspaces=false, tabsize=2, breaklines=true, breakatwhitespace=false}
+
+\title{Assignment Pass 2}
+\author{Sakif Fahmid Zaman\\B00756635\\Dalhousie University\\ECED 3403}
+\pagestyle{empty}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+
+\section{Source Files}
+\subsection{cmake}
+\lstinputlisting{CMakeLists.txt}
+
+\subsection{Main}
+\lstinputlisting[language=C++]{main.cpp}
+
+\subsection{Instructions}
+\lstinputlisting{instructions.txt}
+
+\subsection{Globals}
+\textbf{Header}
+\lstinputlisting[language=C++]{Globals.h}
+\textbf{Source}
+\lstinputlisting[language=C++]{Globals.cpp}
+
+\clearpage
+\subsection{Pass 1}
+\textbf{Header}
+\lstinputlisting[language=C++]{Pass1.h}
+\textbf{Source}
+\lstinputlisting[language=C++]{Pass1.cpp}
+
+\clearpage
+\section{Testing Files}
+\subsection{Input ASM}
+\textbf{a1.asm}
+\lstinputlisting{a1.asm}
+\textbf{a2.asm}
+\lstinputlisting{a2.asm}
+\textbf{example1.asm}
+\lstinputlisting{example1.asm}
+\textbf{test1.asm}
+\lstinputlisting{test1.asm}
+\textbf{FirstPassErrorsExample.asm}
+\lstinputlisting{FirstPassErrorsExample.asm}
+
+\subsection{Output LIS}
+\textbf{a1.asm}
+\lstinputlisting{a1.lis}
+\textbf{a2.asm}
+\lstinputlisting{a2.lis}
+\textbf{example1.asm}
+\lstinputlisting{example1.lis}
+\textbf{test1.asm}
+\lstinputlisting{test1.lis}
+\textbf{FirstPassErrorsExample.asm}
+\lstinputlisting{FirstPassErrorsExample.lis}
+
+Thank you for being so patient with me.
+\end{document}

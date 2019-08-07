@@ -1,4 +1,5 @@
 #include "Pass1.h"
+#include "Pass2.h"
 
 extern short loc_counter;
 extern bool has_error;
@@ -505,19 +506,13 @@ bool Pass1(string src_fname) {
   } else {
     cout << "No Error in Pass1...starting Pass 2" << endl;
     // ofs<<"First pass error....assembly terminated...."<<endl;
+    //ofs.close();
 
-    ofs << "\n ****  Symbol Table ***" << std::endl;
-    ofs << "Name\t\tType\tValue\tDecimal" << std::endl;
-
-    for (auto s : sym_tab) {
-      stringstream ss;
-      ss << std::uppercase << std::setfill('0') << std::setw(4) << std::hex << s.value;
-      string t = ss.str();
-      string hex_v = (t.length() > 4) ? t.substr(t.length() - 4, 4) : t;
-
-      ofs << s.name << "\t\t" << s.type << "\t" << hex_v << "\t" << s.value << endl;
+    if (Pass2(src_fname)) {
+      return true;
+    } else {
+      cout << " Problem in Pass2..." << endl;
+      return false;
     }
-    ofs.close();
-    return true;
   }
 }

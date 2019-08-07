@@ -1,0 +1,22 @@
+ .ASM file: test1.asm
+
+
+
+	1	
+	2	; Operands in wrong order:
+	3	  ld	R0,#1	
+	 ***** Invalid REG: >#1<
+	4	  ldr R5,#-60,r0
+	 ***** Invalid REG: >r0<
+First pass error....assembly terminated....
+
+ ****  Symbol Table ***
+Name		Type	Value	Decimal
+R7		REG	0007	7
+R6		REG	0006	6
+R5		REG	0005	5
+R4		REG	0004	4
+R3		REG	0003	3
+R2		REG	0002	2
+R1		REG	0001	1
+R0		REG	0000	0

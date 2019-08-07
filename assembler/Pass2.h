@@ -1,8 +1,24 @@
 #pragma once
 #ifndef _PASS2_H
 #define _PASS2_H
+// #ifdef __cpp_lib_filesystem
+// #include<filesystem>
+// #else
+// #include<experimental/filesystem>
+// namespace std{
+//     namespace filesystem = experimental::filesystem;
+// }
+// #endif
 
 #include "Globals.h"
+
+#define SET_BIT 1
+#define CLEAR_BIT 0
+#define INSTRUCTION_LEN 2
+#define BSS_OPCODE 0
+#define MAX_BYTE_SREC_DATA 28 //maximum number of byte in srec data field
+#define ADDR_BYTES_SREC 2     //number of byte in address fieled
+#define CHKSUM_BYTE_SREC 1    //number of byte in checksumS fieled
 
 extern short loc_counter;
 extern bool has_error;
@@ -11,17 +27,26 @@ extern vector<Symbol> sym_tab;
 
 /*********** Instruction Set Structs for Pass 2  **************/
 
-enum InstType { MemAccessLD,
-                MemAccessST,
-                MemAccessRelLD,
-                MemAccessRelST,
-                RegInit,
-                Branch13,
-                Branch10,
-                Cex,
-                Arith,
-                RegExchange,
-                OneAddr
+enum PrePostIncrDecr {
+  None,
+  PreIncrement,
+  PreDecrement,
+  PostIncrement,
+  PostDecrement
+};
+
+enum InstType {
+  MemAccessLD,
+  MemAccessST,
+  MemAccessRelLD,
+  MemAccessRelST,
+  RegInit,
+  Branch13,
+  Branch10,
+  Cex,
+  Arith,
+  RegExchange,
+  OneAddr
 };
 
 /* Register direct and register direct with pre or post auto-increment or auto-decrement Inst - Section 6.1.1 (LD and ST) */
@@ -47,7 +72,7 @@ struct MemAccessRelativeInstruction {
   unsigned _dst : 3;      //dest register
   unsigned _src : 3;      //src register
   unsigned _wordByte : 1; //word or byte flag
-  unsigned _offset : 7;   //offset value
+  short int _offset : 7;  //offset value
   unsigned _opCode : 2;   //opcode for ldr or str instruction
 };
 
@@ -73,7 +98,7 @@ union RegisterInitOverlay {
 /* used when expected operands of type - L13 */
 struct Br13Instruction {
   short int _offset : 13; //offset value
-  unsigned _opCode : 3;   //opcode for BL instruction
+  short int _opCode : 3;  //opcode for BL instruction
 };
 
 union Br13Overlay {
@@ -85,7 +110,7 @@ union Br13Overlay {
 /* used when expected operands of type - L10 */
 struct Br10Instruction {
   short int _offset : 10; //offset value
-  unsigned _opCode : 6;   //opcode for branching instruction except BL
+  short int _opCode : 6;  //opcode for branching instruction except BL
 };
 
 union Br10Overlay {
@@ -126,7 +151,9 @@ union ArithOverlay {
 struct RegExchangeInstruction {
   unsigned _dst : 3;
   unsigned _src : 3;
-  unsigned _opCode : 10;
+  unsigned _wordByte : 1;
+  unsigned _regCon : 1;
+  unsigned _opCode : 8;
 };
 
 union RegExchangeOverlay {
@@ -149,7 +176,24 @@ union OneAddrOverlay {
   OneAddrInstruction inst;
 };
 
-void print_err_to_lis2(Error_T e, string s);
+/*<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>> */
+enum SRec_Type {
+  S0,
+  S1,
+  S9
+};
+
+struct SRec {
+  SRec_Type _type;
+  string _count;    //char _count[2];
+  string _addr;     //char _addr[4];
+  string _data;     //should be max 28 byte
+  string _checksum; //char _checksum[2];
+};
+
+//string s1str, s9str;
+
+//std::filesystem::path getexepath();
 void proc_instruction(short int inst_id, vector<string> &toks);
 void proc_directive(short int d_id, vector<string> &rec, string p_tok = "");
 void proc_tokens(vector<string> &toks);
