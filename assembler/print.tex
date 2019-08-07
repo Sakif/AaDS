@@ -22,44 +22,47 @@
 \subsection{Instructions}
 \lstinputlisting{instructions.txt}
 
-\subsection{Globals}
-\textbf{Header}
-\lstinputlisting[language=C++]{Globals.h}
-\textbf{Source}
-\lstinputlisting[language=C++]{Globals.cpp}
-
-\clearpage
 \subsection{Pass 1}
 \textbf{Header}
 \lstinputlisting[language=C++]{Pass1.h}
 \textbf{Source}
 \lstinputlisting[language=C++]{Pass1.cpp}
 
+\subsection{Pass 2}
+\textbf{Header}
+\lstinputlisting[language=C++]{Pass2.h}
+\textbf{Source}
+\lstinputlisting[language=C++]{Pass2.cpp}
 \clearpage
-\section{Testing Files}
-\subsection{Input ASM}
-\textbf{a1.asm}
-\lstinputlisting{a1.asm}
-\textbf{a2.asm}
-\lstinputlisting{a2.asm}
-\textbf{example1.asm}
+\section{Test 1}
+This test file was provide for the people who have not done the first pass. This contains no errors. Below is a copy of the original asm, below that is a copy of the lis and xme that is expected.
+
+\textbf{Original ASM}
+\lstinputlisting{a3.asm}
+\textbf{Expected Output}
+\lstinputlisting{expectedLis.txt}
+\textbf{Expected XME}
+\lstinputlisting{expectedXME.txt}
+\subsection{Results}
+After passing the assembly file through my assembler, these were the results:
+
+\textbf{LIS}
+\lstinputlisting{a3.lis}
+\textbf{XME}
+\lstinputlisting{a3.xme}
+
+The results match.
+
+\section{Test 2}
+A simple test I have written to quickly test my progress.
+
+\textbf{Original ASM}
 \lstinputlisting{example1.asm}
-\textbf{test1.asm}
-\lstinputlisting{test1.asm}
-\textbf{FirstPassErrorsExample.asm}
-\lstinputlisting{FirstPassErrorsExample.asm}
-
-\subsection{Output LIS}
-\textbf{a1.asm}
-\lstinputlisting{a1.lis}
-\textbf{a2.asm}
-\lstinputlisting{a2.lis}
-\textbf{example1.asm}
+\subsection{Results}
+\textbf{LIS}
 \lstinputlisting{example1.lis}
-\textbf{test1.asm}
-\lstinputlisting{test1.lis}
-\textbf{FirstPassErrorsExample.asm}
-\lstinputlisting{FirstPassErrorsExample.lis}
+\textbf{XME}
+\lstinputlisting{example1.xme}
 
-Thank you for being so patient with me.
+We can assume this executable is correct as Test 1 was successful and the results matched.
 \end{document}

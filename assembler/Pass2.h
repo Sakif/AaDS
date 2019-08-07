@@ -1,14 +1,6 @@
 #pragma once
 #ifndef _PASS2_H
 #define _PASS2_H
-// #ifdef __cpp_lib_filesystem
-// #include<filesystem>
-// #else
-// #include<experimental/filesystem>
-// namespace std{
-//     namespace filesystem = experimental::filesystem;
-// }
-// #endif
 
 #include "Globals.h"
 
@@ -49,8 +41,7 @@ enum InstType {
   OneAddr
 };
 
-/* Register direct and register direct with pre or post auto-increment or auto-decrement Inst - Section 6.1.1 (LD and ST) */
-/* used when expected operands of type - (IDR,R) or (R,IDR) */
+/* Register direct and register direct with pre or post auto-increment or auto-decrement Inst - Section 6.1.1 (LD and ST) used when expected operands of type - (IDR,R) or (R,IDR) */
 struct MemAccessInstruction {
   unsigned _dst : 3;      //dest register
   unsigned _src : 3;      //src register
@@ -66,8 +57,7 @@ union MemAccessOverlay {
   MemAccessInstruction inst;
 };
 
-/* Register Relative memory access Inst - Section 6.1.2 (LDR and STR) */
-/* used when expected operands of type - (R,OFFSET,R) or (R,R,OFFSET) */
+/* Register Relative memory access Inst - Section 6.1.2 (LDR and STR) used when expected operands of type - (R,OFFSET,R) or (R,R,OFFSET) */
 struct MemAccessRelativeInstruction {
   unsigned _dst : 3;      //dest register
   unsigned _src : 3;      //src register
@@ -81,8 +71,7 @@ union MemAccessRelativeOverlay {
   MemAccessRelativeInstruction inst;
 };
 
-/* Register Initialization Instruction - Section 6.2 */
-/* used when expected operands of type - (BYTE,R)  */
+/* Register Initialization Instruction - Section 6.2 used when expected operands of type - (BYTE,R)  */
 struct RegisterInitInstruction {
   unsigned _dst : 3;    //dest register
   unsigned _Byte : 8;   //8-bit value
@@ -94,8 +83,7 @@ union RegisterInitOverlay {
   RegisterInitInstruction inst;
 };
 
-/* Branching with 13-bit offset Inst - Section 6.3 (BL) */
-/* used when expected operands of type - L13 */
+/* Branching with 13-bit offset Inst - Section 6.3 (BL) used when expected operands of type - L13 */
 struct Br13Instruction {
   short int _offset : 13; //offset value
   short int _opCode : 3;  //opcode for BL instruction
@@ -106,8 +94,7 @@ union Br13Overlay {
   Br13Instruction inst;
 };
 
-/* Branching with 10-bit offset Inst - Section 6.3 (Branching other than BL) */
-/* used when expected operands of type - L10 */
+/* Branching with 10-bit offset Inst - Section 6.3 (Branching other than BL) used when expected operands of type - L10 */
 struct Br10Instruction {
   short int _offset : 10; //offset value
   short int _opCode : 6;  //opcode for branching instruction except BL
@@ -117,8 +104,8 @@ union Br10Overlay {
   unsigned short sh;
   Br10Instruction inst;
 };
-/* Conditional Execution Inst - Section 6.4 (CEX) */
-/* expected operands (COND_CEC,TCFC,TCFC) */
+
+/* Conditional Execution Inst - Section 6.4 (CEX) expected operands (COND_CEC,TCFC,TCFC) */
 struct CexInstruction {
   unsigned _fc : 3;
   unsigned _tc : 3;
@@ -131,8 +118,7 @@ union CexOverlay {
   CexInstruction inst;
 };
 
-/* 2-operand (REG-REG or CON-REG) Inst - Section 6.5 and Reg Exchange MOV(.B or .W) */
-/* expected operands (CON_R,R) */
+/* 2-operand (REG-REG or CON-REG) Inst - Section 6.5 and Reg Exchange MOV(.B or .W) expected operands (CON_R,R) */
 struct ArithInstruction {
   unsigned _dst : 3;
   unsigned _src : 3;
@@ -146,8 +132,7 @@ union ArithOverlay {
   ArithInstruction inst;
 };
 
-/* Register exchange (REG-REG) Inst - Section 6.6 SWAP, except MOV(.B or .W) */
-/* expected operands (R,R) */
+/* Register exchange (REG-REG) Inst - Section 6.6 SWAP, except MOV(.B or .W) expected operands (R,R) */
 struct RegExchangeInstruction {
   unsigned _dst : 3;
   unsigned _src : 3;
@@ -161,8 +146,7 @@ union RegExchangeOverlay {
   RegExchangeInstruction inst;
 };
 
-/* Single register Inst - Section 6.7 */
-/* expected operands (R) */
+/* Single register Inst - Section 6.7 expected operands (R) */
 struct OneAddrInstruction {
   unsigned _dst : 3;
   unsigned _zeros : 3;
@@ -190,8 +174,6 @@ struct SRec {
   string _data;     //should be max 28 byte
   string _checksum; //char _checksum[2];
 };
-
-//string s1str, s9str;
 
 //std::filesystem::path getexepath();
 void proc_instruction(short int inst_id, vector<string> &toks);

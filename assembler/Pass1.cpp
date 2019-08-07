@@ -239,35 +239,30 @@ void handleDirEQU(vector<string> &ops, string &p_tok) {
   if (p_tok.empty()) { //preceding token must be label but not present
     print_err_to_lis(UNDEFINED_SYMBOL, "EQU directive must be preceded by a LBL");
     has_error = true;
-
-  }
-
-  else if (ops.size() != 1) {
+  } else if (ops.size() != 1) {
     print_err_to_lis(MISSING_OPERAND, "EQU must have an operand");
     has_error = true;
   } else if (ops.size() == 1) { // looks fine - operand could be a value or a register
     auto r1 = is_label_in_sym_tab(p_tok);
-
     auto rr = is_register(ops[0]);
-    if (rr == INVALID_INDEX && !is_numeric(ops[0])) { //operand is neither a register nor a value - error
+    if (rr == INVALID_INDEX && !is_numeric(ops[0])) { // operand is neither a register nor a value - error
       print_err_to_lis(INVALID_OPERAND, "Operand of EQU must be a value or a REG");
       has_error = true;
-    } else if (rr != INVALID_INDEX && !sym_tab[r1].type.compare("UNK")) { //label is a REG with the corresponding REG value
+    } else if (rr != INVALID_INDEX) { // label is a REG with the corresponding REG value
       cout << sym_tab[r1].type << "\tvalue " << sym_tab[r1].value << endl;
       sym_tab[r1].type = "REG";
       sym_tab[r1].value = sym_tab[rr].value;
-    } else { //operand is numeric
-
+    } else { // operand is numeric
       Error_T e = str2int(ops[0], r);
       if (e != NO_ERR) { //has error in the value
         print_err_to_lis(e, "Operand of EQU is not valid");
         has_error = true;
       } else {
-
         if (!sym_tab[r1].type.compare("UNK")) {
           sym_tab[r1].type = "LBL";
           sym_tab[r1].value = r;
-        }
+        } else
+          sym_tab[r1].value = r;
       }
     }
   }
@@ -511,7 +506,7 @@ bool Pass1(string src_fname) {
     if (Pass2(src_fname)) {
       return true;
     } else {
-      cout << " Problem in Pass2..." << endl;
+      cout << " Problem in Pass2.." << endl;
       return false;
     }
   }
