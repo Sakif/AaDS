@@ -1,6 +1,7 @@
 #ifndef DOUBLE_SENTINEL_LIST_H
 #define DOUBLE_SENTINEL_LIST_H
 
+#pragma once
 #include "doubleNode.hpp"
 #include "exception.hpp"
 #include <iostream>

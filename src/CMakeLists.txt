@@ -8,7 +8,5 @@ project(AADS)
 
 include_directories(header)
 
-project(AADS)
-
 add_executable(list listTest.cpp)
-add_executable(uni unicode.cpp)
+add_executable(deque dequeTest.cpp)
