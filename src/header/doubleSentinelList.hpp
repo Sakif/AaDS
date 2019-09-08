@@ -8,9 +8,9 @@
 template <typename Type>
 class doubleSentinelList {
 private:
+  int listSize;
   doubleNode<Type> *listHead;
   doubleNode<Type> *listTail;
-  int listSize;
   void quickSort(doubleNode<Type> *, doubleNode<Type> *);
 
 public:

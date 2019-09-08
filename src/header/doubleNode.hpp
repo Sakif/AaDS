@@ -24,7 +24,7 @@ public:
 };
 
 template <typename Type>
-doubleNode<Type>::doubleNode(Type const &e, doubleNode<Type> *p, doubleNode<Type> *n) : element(e), previousNode(p), nextNode(n) {}
+doubleNode<Type>::doubleNode(Type const &e, doubleNode<Type> *p, doubleNode<Type> *n) : element(e), nextNode(n), previousNode(p) {}
 
 template <typename Type>
 Type doubleNode<Type>::value() const { return element; }
