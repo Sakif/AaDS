@@ -20,6 +20,7 @@ public:
 
   unsigned size() const;
   bool empty() const;
+  unsigned capacity() const;
 };
 
 template <typename type>
@@ -35,5 +36,8 @@ unsigned resizableDeque<type>::size() const { return dequeSize; }
 
 template <typename type>
 bool resizableDeque<type>::empty() const { return size() == 0; }
+
+template <typename type>
+unsigned resizableDeque<type>::capacity() const{return arrayCapacity;}
 
 #endif
