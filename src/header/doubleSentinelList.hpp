@@ -2,9 +2,10 @@
 #define DOUBLE_SENTINEL_LIST_H
 
 #pragma once
+#include <iostream>
+
 #include "doubleNode.hpp"
 #include "exception.hpp"
-#include <iostream>
 
 template <typename Type>
 class doubleSentinelList {

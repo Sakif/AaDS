@@ -38,6 +38,6 @@ template <typename type>
 bool resizableDeque<type>::empty() const { return size() == 0; }
 
 template <typename type>
-unsigned resizableDeque<type>::capacity() const{return arrayCapacity;}
+unsigned resizableDeque<type>::capacity() const { return arrayCapacity; }
 
 #endif
