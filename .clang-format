@@ -1,4 +1,3 @@
 ---
-BasedOnStyle: Google
+BasedOnStyle: Mozilla
 ColumnLimit: 0
-AccessModifierOffset: -2
