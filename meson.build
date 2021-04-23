@@ -22,3 +22,6 @@ add_global_arguments('-Wmissing-declarations',
 
 executable('AaDS',
            'main.cpp')
+
+executable('gen_rand_int',
+           'gen_rand_int.cpp')
