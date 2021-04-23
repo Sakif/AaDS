@@ -1,12 +1,24 @@
 project('AaDS', 'cpp',
-  version : '0.1',
+  version : '0.2',
   default_options : [
     'warning_level=3',
-    'cpp_std=gnu++17',
+    'cpp_std=gnu++20',
     'buildtype=custom',
     'werror=true',
-    'optimization=s'
+    'optimization=3'
   ])
+
+compiler = meson.get_compiler('cpp')
+
+if compiler.get_id() == 'gcc'
+    message('Compiler: GCC')
+elif compiler.get_id() == 'clang'
+    message('Compiler: LLVM/clang')
+endif
+
+add_global_arguments('-Wmissing-declarations',
+                     '-Wno-unused',
+                     language: 'cpp')
 
 executable('AaDS',
            'main.cpp')
