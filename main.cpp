@@ -1,9 +1,11 @@
+#include "data_struct/deque.hpp"
 #include "data_struct/list.hpp"
 #include <cstdlib>
 
 using namespace std;
 
 int main() {
+  auto queue = AaDS::deque<int>();
   auto l = AaDS::double_list<int>();
 
   cout << "List size: " << l.size() << endl
@@ -29,6 +31,15 @@ int main() {
        << "List empty: " << l.empty() << endl
        << "Front: " << l.front() << endl
        << "Back: " << l.back() << endl;
+
+#define size 6
+  auto ifront = 3;
+  for (auto i = 0; i < size; i++) {
+    cout << ifront << " ";
+    if (--ifront < 0) {
+      ifront += size;
+    }
+  }
 
   return EXIT_SUCCESS;
 }
