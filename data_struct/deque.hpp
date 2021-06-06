@@ -39,6 +39,10 @@ private:
   int iback;
   t *internal_array;
 
+  /* for changing the internal array */
+  void double_array();
+  void half_array();
+
 public:
   deque(int = 16);
   ~deque();
@@ -55,6 +59,7 @@ public:
   void push_back(t const &);
   t pop_front();
   t pop_back();
+  void clear();
 
   /* Friends */
   template <typename T>
@@ -62,8 +67,6 @@ public:
 };
 
 /*
-Constructors
-
 The constructor takes as an argument the initial capacity of the array and
 allocates memory for that array. The initial array capacity must be 16 or more,
 with a default capacity of 16. If the user passes a value less than 16, use 16.
@@ -125,6 +128,34 @@ unsigned deque<t>::capacity() const {
   return array_capacity;
 }
 
+/* doubles the internal array */
+template <typename t>
+void deque<t>::double_array() {
+  auto new_array = new t[DOUBLE(capacity())];
+  for (auto new_array_i = 0U; new_array_i < capacity(); new_array_i++) {
+    new_array[new_array_i] = internal_array[ifront];
+    ++ifront %= capacity();
+    iback = ifront;
+  }
+  ifront = 0;
+  array_capacity = DOUBLE(capacity());
+  internal_array = new_array;
+}
+
+/* halves the internal array */
+template <typename t>
+void deque<t>::half_array() {
+  auto new_array = new t[HALF(capacity())];
+  for (auto new_array_i = 0U; new_array_i < HALF(capacity()); new_array_i++) {
+    new_array[new_array_i] = internal_array[ifront];
+    ++ifront %= capacity();
+    iback = ifront;
+  }
+  ifront = 0;
+  array_capacity = HALF(capacity());
+  internal_array = new_array;
+}
+
 /*
 Insert the new element at the front of the deque. If before the element is
 placed into the deque, the array is filled, the capacity of the array is
@@ -134,15 +165,7 @@ template <typename t>
 void deque<t>::push_front(t const &obj) {
   deque_size++;
   if (size() > capacity()) {
-    auto new_array = new t[DOUBLE(capacity())];
-    for (auto new_array_i = 0U; new_array_i < capacity(); new_array_i++) {
-      new_array[new_array_i + 1] = internal_array[ifront];
-      ++ifront %= capacity();
-    }
-    ifront = 1;
-    iback = capacity();
-    array_capacity = DOUBLE(capacity());
-    internal_array = new_array;
+    double_array();
   }
   if (--ifront < 0) {
     ifront += capacity();
@@ -159,18 +182,7 @@ template <typename t>
 void deque<t>::push_back(t const &obj) {
   deque_size++;
   if (size() > capacity()) {
-    auto new_array = new t[DOUBLE(capacity())];
-    for (auto new_array_i = 0U; new_array_i < capacity(); new_array_i++) {
-      new_array[new_array_i] = internal_array[ifront];
-      ++ifront %= capacity();
-    }
-    /* the new front index is the begining for the array */
-    ifront = 0;
-    /* the new back index is the same as the index of the last element of the
-old array so old capacity - 1 */
-    iback = capacity() - 1;
-    array_capacity = DOUBLE(capacity());
-    internal_array = new_array;
+    double_array();
   }
   ++iback %= capacity();
   internal_array[iback] = obj;
@@ -189,10 +201,44 @@ t deque<t>::pop_front() {
   deque_size--;
   if (size() <= QUARTER(capacity()) &&
       HALF(capacity()) >= initial_array_capacity) {
-    auto new_array = new t[HALF(capacity())];
-    internal_array = new_array;
+    half_array();
   }
   return return_value;
+}
+
+/*
+Removes the element at the back of the deque. If, after the element is removed,
+the array is 1/4 full or less and the array capacity is greater than the initial
+capacity, the capacity of the array is halved. This may throw a underflow
+exception. (O(1) on average)
+*/
+template <typename t>
+t deque<t>::pop_back() {
+  auto return_value = back();
+  if (--iback < 0) {
+    iback += capacity();
+  }
+  deque_size--;
+  if (size() <= QUARTER(capacity()) &&
+      HALF(capacity()) >= initial_array_capacity) {
+    half_array();
+  }
+  return return_value;
+}
+
+/*
+Empties the deque by resetting the member variables. The array is resized to the
+initial capacity. (O(1))
+*/
+template <typename t>
+void deque<t>::clear() {
+  array_capacity = initial_array_capacity;
+  auto new_array = new t[array_capacity];
+  ifront = 0;
+  iback = 0;
+  deque_size = 0;
+
+  internal_array = new_array;
 }
 
 } /* namespace AaDS */

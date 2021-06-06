@@ -1,8 +1,7 @@
 project('AaDS', 'cpp',
-  version : '0.2',
+  version : '1.0',
   default_options : [
     'warning_level=3',
-    'cpp_std=gnu++20',
     'buildtype=custom',
     'werror=true',
     'optimization=3'

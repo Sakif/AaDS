@@ -111,13 +111,8 @@ default, a new instance of the class Type) and two pointers to a Double_node
 respectively. O(1)
 */
 template <typename t>
-double_list<t>::node::node(
-    t const &obj,
-    double_list<t>::node *pn,
-    double_list<t>::node *nn)
-    : element(obj),
-      next_node(nn),
-      previous_node(pn) {}
+double_list<t>::node::node(t const &obj, node *pn, node *nn)
+    : element(obj), next_node(nn), previous_node(pn) {}
 
 /* Returns the next pointer. O(1) */
 template <typename t>
@@ -154,9 +149,7 @@ head sentinel and nullptr, respectively. The node count is set to 0. O(1)
 */
 template <typename t>
 double_list<t>::double_list()
-    : list_head(new node()),
-      list_tail(new node(t(), list_head)),
-      list_size(0) {
+    : list_head(new node()), list_tail(new node(t(), list_head)), list_size(0) {
   list_head->next_node = list_tail;
 }
 
@@ -169,9 +162,8 @@ affect the copy. O(n)
 */
 template <typename t>
 double_list<t>::double_list(double_list const &l)
-    : list_size(l.size()),
-      list_head(new node()),
-      list_tail(new node(t(), list_head)) {
+    : list_head(new node()), list_tail(new node(t(), list_head)),
+      list_size(l.size()) {
   for (auto n = l.begin(); n != l.end(); n = n->next()) {
     push_back(n->value());
   }

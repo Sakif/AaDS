@@ -88,8 +88,8 @@ unsigned array<type>::capacity() const { return array_capacity; }
 /* adds item to the end of the array */
 template <typename type>
 bool array<type>::append(type n) {
+  /* cannot append if array is full */
   if (size() >= capacity()) {
-    /* cannot append if array is full */
     return false;
   }
 
@@ -101,7 +101,7 @@ bool array<type>::append(type n) {
 /* adds all the items in the array and returns the sum */
 template <typename type>
 type array<type>::sum() const {
-  auto sum = 0U;
+  type sum = 0;
   for (auto i = 0U; i < size(); i++) {
     sum += internal_array[i];
   }
@@ -208,6 +208,6 @@ unsigned long long fibonacci_r(int n) {
   }
 }
 
-} // namespace AaDS
+} /* namespace AaDS */
 
 #endif
