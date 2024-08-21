@@ -8,8 +8,7 @@ add_compile_options(-Wall -Wextra -Werror
   -m64 -march=native -mtune=native
   -Os -g0 -flto -fstrict-aliasing)
 
-add_link_options(# -static -SDL2
-  -flto -fstrict-aliasing)
+add_link_options(-flto -fstrict-aliasing)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 17)
@@ -24,3 +23,4 @@ file(GLOB_RECURSE SOURCE_FILES
     ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system)
