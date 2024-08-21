@@ -1,5 +1,5 @@
 \documentclass[10pt, twocolumn]{article}
-
+\pdfminorversion=7
 \RequirePackage{xcolor}
 
 \definecolor{draculabg}      {RGB}{40,  42,  54}
@@ -14,51 +14,52 @@
 \definecolor{draculared}     {RGB}{255, 85,  85}
 \definecolor{draculayellow}  {RGB}{241, 250, 140}
 
-\pagecolor{draculabg}
-\color{draculafg}
+%\pagecolor{draculabg}
+%\color{draculafg}
 
 \renewcommand*\familydefault{\sfdefault}
-\usepackage[letterpaper, top=5mm, bottom=5mm, left=5mm, right=5mm]{geometry}
-\usepackage{fancyhdr, multicol}
+\usepackage[
+  letterpaper,
+  margin=6mm,
+% landscape
+% top=5mm, bottom=5mm, left=5mm, right=5mm
+]{geometry}
+\usepackage[pdftitle={Sakif Zaman's Resume}, pdfauthor={Sakif Fahmid Zaman}, pdfsubject={Resume}, unicode, colorlinks=true]{hyperref}
+% \usepackage{fancyhdr, multicol}
 % \pagestyle{fancy}
 % \setlength{\headheight}{-5pt}
 
-\lhead{} \chead{\small{Sakif Zaman $\cdot$ Software Engineer $\cdot$ Halifax, NS $\cdot$ \textbf{sakif.f.zaman@global.lmco.com} $\cdot$ (902) 404-0717}} \rhead{}
-\lfoot{} \cfoot{} \rfoot{}
+% \lhead{} \chead{\small{Sakif Zaman $\cdot$ Software Engineer $\cdot$ Halifax, NS $\cdot$ \textbf{sakif.f.zaman@global.lmco.com} $\cdot$ (902) 404-0717}} \rhead{}
+% \lfoot{} \cfoot{} \rfoot{}
 
 \begin{document}
-\section*{Sakif Fahmid Zaman}
+\section*{\color{draculapurple}Sakif Fahmid Zaman}
+\textbf{Email} \hfill \href{mailto:smfzaman@outlook.com}{smfzaman@outlook.com}\\
+\textbf{Phone} \hfill (902) 404-0717\\
+\textbf{Address} \hfill Halifax, NS\\
+\textbf{Github} \hfill \url{https://github.com/Sakif}
 
-\subsection*{About Me}
-I am currently looking for work in Software Engineering/Computing field. I'm employed by Lockheed Martin Canada (LMC) as a Software Engineer. While in LMC I worked on the Halifax Class Modernization Project and my primary tasks were related to the Combat Management System 330. Most of my work at LMC was in Java 11 and maintaining legacy C libraries.
-
-% My programming experience is with C/C++ and Python. I have created various data structures with C++ and used C++ to program on Robot Operating System. I used Python with Numpy and MatPlotLib with analyze data captured from oscilloscopes and various other sensors including ultrasonic and LiDAR. I have written PowerShell script and bash script and am comfortable working in a command line environment.
-
-% I have developed on both Windows and Linux platform using various IDE's including Visual Studio, Eclipse and Emacs. I use git predominantly for version control. I know how to set up virtual environment with Oracle VirtualBox and will be comfortable with other virtual machines.
-
-I have learned black box testing while working at Blackberry Ltd and Synaptive Medical. There I did scripted and exploratory testing to evaluate the stability of their products, and filing bug reports on JIRA. I have created benchmarks to do performance testing. I have learned Agile development practices.
-
-I have good writing skills. I use LaTeX, Microsoft Office and other office software (LibreOffice/OpenOffice) to create reports and presentations. I have the ability to conduct research (from journals and other scholarly publications) and write academic/research papers.
-
-\subsection*{Employment History}
+\subsection*{\color{draculapurple}Employment History}
 %\begin{multicols}{2}
-\paragraph{Software Engineer} Lockheed Martin Canada, 2021 -- present\\
+\paragraph{Software Engineer} \emph{Lockheed-Martin Canada} \hfill 2021 -- 2024\\
 \emph{Product}: CSI ISS, Combat Management System 330
 
-Agile precess, secondary team lead, RedMine for Project Management and Issue Tracking.
+Large scale, real time, distributed combat management system with redundancy.
 
-Writing Techinical Statement of Requirement, Detailed Design, Implementation and Validation requirements, Version Briefs and Changelogs for product.
+Agile process, secondary team lead, RedMine for Project Management and Issue Tracking.
 
-Investigating root causes of reported issues, writing reports of findings and recommendations to fix/mitigate issues, presenting findings to customer (Department of National Defence).
+Writing Technical Statement of Requirement, Detailed Design, Implementation and Validation requirements, Version Briefs and Changelogs for product.
 
-Techinical expart on 3D Radar subsystem and Underwater Warfare Suite Upgrade. Human-Mechine Interface design using Java Swing. Maindained legacy C software library.
+Investigating root causes of reported issues, writing reports of findings and recommendations to fix/mitigate issues, presenting findings to customer (Department of National Defense).
+
+Technical expert on 3D Radar subsystem and Underwater Warfare Suite Upgrade. Human-Machine Interface design using Java Swing. Maintained legacy C software library.
 
 Primary software development tools: Java, JetBrains IntelliJ IDE, RTI DDS for interservice and subsystem communications, XML, SQL, Gradle, RedHat Enterprise Linux, PodMan Container, SVN version control, grep, find.
 
-\paragraph{Tutor/TA} Saint Mary's University, 2017 -- 2018\\
+\paragraph{Tutor/TA} \emph{Saint Mary's University} \hfill 2017 -- 2018\\
 I assisted first year students with their physics, chemistry and math classes. I also assisted them in writing their lab reports and assignments.
 
-\paragraph{Software QA Analyst} Blackberry Ltd, 2015\\
+\paragraph{Software QA Analyst} \emph{Blackberry Ltd} \hfill 2015\\
 \emph{Product}: Blackberry Priv Smartphone\\
 Automated testing,
 Scripted testing,
@@ -67,15 +68,13 @@ Black box testing,
 Bug reporting using JIRA,
 Bug recreation
 
-
-\paragraph{Manufacturing Quality Engineer} Synaptive Medical, 2014\\
-\begin{enumerate}
-\item Bug reporting using JIRA
-\item Black box testing
-\item Exploratory testing
-\item Regression testing
-\item Performance testing
-\end{enumerate}
+\paragraph{Manufacturing Quality Engineer} \emph{Synaptive Medical} \hfill 2014\\
+\emph{Product}: MODUS NAV\\
+Bug reporting using JIRA,
+Black box testing,
+Exploratory testing,
+Regression testing,
+Performance testing
 
 % \paragraph{Junior Developer} Norex
 % \begin{enumerate}
@@ -83,23 +82,23 @@ Bug recreation
 % \item Quality Assurance for websites
 % \item Created a search engine for the WordPress platform using PHP, SQL
 % \end{enumerate}
-%\end{multicols}
+% \end{multicols}
 
-\subsection*{Education}
-%\begin{multicols}{2}
-\paragraph{Bachelor of Engineering} Dalhousie University, 2018 -- 2021\\
+\subsection*{\color{draculapurple}Education}
+\paragraph{Bachelor of Engineering} \emph{Dalhousie University} \hfill 2018 -- 2021\\
 Major: Computer Engineering
 
-\paragraph{Diploma in Engineering} Saint Mary's University, 2016 -- 2018\\
+\paragraph{Diploma in Engineering} \emph{Saint Mary's University} \hfill 2016 -- 2018\\
 Dean's List
 
-%\end{multicols}
+\vfill
+\input{resume/about_me}
 
-\subsection*{Skills}
+\subsection*{\color{draculapurple}Skills}
 Agile Process,
 Story Creation,
 Story Valadation,
-Report Writing,
+Report Writing and Presentations,
 C/C++,
 Java,
 Python,
@@ -109,6 +108,7 @@ Linux,
 \LaTeX,
 Virtual Machine,
 Git,
+SVN,
 SSH,
 JIRA,
 Exploratory Testing,
@@ -119,6 +119,8 @@ Quality Assurance,
 Circuit Building,
 Hardware Testing,
 Software Testing,
-Blender
 
+\subsection*{\color{draculapurple}Languages}
+\textbf{English} Fluent Reading, Fluent Writing, Fluent Speaking\\
+\textbf{Bangla} Beginner Speaking
 \end{document}

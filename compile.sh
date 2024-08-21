@@ -10,4 +10,5 @@ mold -run cmake --build $dir
 
 # ./build/wee
 latexmk -pdf resume/resume.tex
-latexmk -c resume/resume.tex
+gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.7 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile=resume_c.pdf resume.pdf
+latexmk -C resume/*.tex
