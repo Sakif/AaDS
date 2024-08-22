@@ -8,7 +8,9 @@ fi
 
 mold -run cmake --build $dir
 
-# ./build/wee
-latexmk -pdf resume/resume.tex
-gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.7 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile=resume_c.pdf resume.pdf
-latexmk -C resume/*.tex
+# ./build/bol
+./build/leet
+
+# latexmk -pdf resume/resume.tex
+# gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.7 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile=SAKIF_FAHMID_ZAMAN.pdf resume.pdf
+# latexmk -C resume/*.tex

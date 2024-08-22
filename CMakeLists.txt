@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.25)
+cmake_minimum_required(VERSION 3.25)
 
 set(CMAKE_C_COMPILER "/usr/bin/clang")
 set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
@@ -15,12 +15,17 @@ set(CMAKE_C_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_C_EXTENSIONS ON)
 
-project(wee VERSION 0.1
+project(bol VERSION 0.1
     LANGUAGES C CXX)
 
-file(GLOB_RECURSE SOURCE_FILES
+file(GLOB_RECURSE SRC_FILES
     CONFIGURE_DEPENDS # Automatically reconfigure if source files are added/removed.
     ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
-add_executable(${PROJECT_NAME} ${SOURCE_FILES})
+add_executable(${PROJECT_NAME} ${SRC_FILES})
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system)
+
+file(GLOB_RECURSE LEET_CODE
+    CONFIGURE_DEPENDS # Automatically reconfigure if source files are added/removed.
+    ${PROJECT_SOURCE_DIR}/leet/*.cpp)
+add_executable(leet ${LEET_CODE})
