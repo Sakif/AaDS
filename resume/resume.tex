@@ -1,66 +1,138 @@
-\documentclass[10pt, twocolumn]{article}
+\documentclass[12pt %, twocolumn
+]{article}
 \pdfminorversion=7
 \RequirePackage{xcolor}
 
-\definecolor{draculabg}      {RGB}{40,  42,  54}
-\definecolor{draculacl}      {RGB}{68,  71,  90}
-\definecolor{draculafg}      {RGB}{248, 248, 242}
-\definecolor{draculacomment} {RGB}{98,  114, 164}
-\definecolor{draculacyan}    {RGB}{139, 233, 253}
-\definecolor{draculagreen}   {RGB}{80,  250, 123}
-\definecolor{draculaorange}  {RGB}{255, 184, 108}
-\definecolor{draculapink}    {RGB}{255, 121, 198}
-\definecolor{draculapurple}  {RGB}{189, 147, 249}
-\definecolor{draculared}     {RGB}{255, 85,  85}
-\definecolor{draculayellow}  {RGB}{241, 250, 140}
+\definecolor{draculabg}     {RGB}{40,  42,  54}
+\definecolor{draculacl}     {RGB}{68,  71,  90}
+\definecolor{draculafg}     {RGB}{248, 248, 242}
+\definecolor{draculacomment}{RGB}{98,  114, 164}
+\definecolor{draculacyan}   {RGB}{139, 233, 253}
+\definecolor{draculagreen}  {RGB}{80,  250, 123}
+\definecolor{draculaorange} {RGB}{255, 184, 108}
+\definecolor{draculapink}   {RGB}{255, 121, 198}
+\definecolor{draculapurple} {RGB}{189, 147, 249}
+\definecolor{draculared}    {RGB}{255, 85,  85}
+\definecolor{draculayellow} {RGB}{241, 250, 140}
+% \pagecolor{draculabg}
+% \color{draculafg}
 
-%\pagecolor{draculabg}
-%\color{draculafg}
-
+%project what you did
 \renewcommand*\familydefault{\sfdefault}
+\renewcommand{\thepage}{}
+\renewcommand{\thesection}{}
+
+\setlength{\parindent}{0mm}
+
 \usepackage[
   letterpaper,
-  margin=5mm,
-% landscape
-% top=5mm, bottom=5mm, left=5mm, right=5mm
+  margin=1in
 ]{geometry}
-\usepackage[pdftitle={Sakif Zaman's Resume}, pdfauthor={Sakif Fahmid Zaman}, pdfsubject={Resume}, unicode, colorlinks=true]{hyperref}
-% \usepackage{fancyhdr, multicol}
-% \pagestyle{fancy}
-% \setlength{\headheight}{-5pt}
 
-% \lhead{} \chead{\small{Sakif Zaman $\cdot$ Software Engineer $\cdot$ Halifax, NS $\cdot$ \textbf{sakif.f.zaman@global.lmco.com} $\cdot$ (902) 404-0717}} \rhead{}
-% \lfoot{} \cfoot{} \rfoot{}
+\usepackage[
+  pdftitle={Sakif Zaman's Resume},
+  pdfauthor={Sakif Fahmid Zaman},
+  pdfsubject={Resume},
+  unicode,
+  colorlinks=true
+]{hyperref}
+\usepackage{multicol}
+
+\newcommand{\cvsection}[1] {
+  \begin{center}
+    \large\color{draculapurple}\textbf{#1}
+  \end{center}
+}
 
 \begin{document}
-\section*{\color{draculapurple}Sakif Fahmid Zaman}
-\textbf{Email} \hfill \href{mailto:smfzaman@outlook.com}{smfzaman@outlook.com}\\
-\textbf{Phone} \hfill (902) 404-0717\\
-\textbf{Address} \hfill Halifax, NS\\
-\textbf{Github} \hfill \url{https://github.com/Sakif}
 
-\subsection*{\color{draculapurple}Employment History}
-%\begin{multicols}{2}
-\paragraph{Software Engineer} \emph{Lockheed-Martin Canada} \hfill 2021 -- 2024\\
-\emph{Product}: CSI ISS, Combat Management System 330
+\begin{center}
+  \color{draculapurple}\textbf{\huge SAKIF FAHMID ZAMAN}
+
+  Engineer In Training (NS PEng), Software Engineer
+\end{center}
+
+
+
+\begin{multicols}{3}
+\textbf{Email} \hfill \href{mailto:smfzaman@outlook.com}{smfzaman@outlook.com}
+
+\textbf{Phone} \hfill (902) 404-0717
+
+\textbf{Address} \hfill Halifax, NS
+
+%\textbf{Github} \hfill \url{https://github.com/Sakif}
+\end{multicols}
+
+\cvsection{Education}
+\paragraph{Bachelor of Engineering} \emph{Dalhousie University} \hfill 2018 -- 2021
+
+Major: Electrical Engineering
+
+\paragraph{Diploma in Engineering} \emph{Saint Mary's University} \hfill 2016 -- 2018
+
+Dean's List
+
+\cvsection{Employment History}
+
+\textbf{\color{draculapurple}Software Engineer}
+
+\emph{Lockheed-Martin Canada} \hfill 2021 ---
+
+\underline{Product: CSI ISS, Combat Management System 330}
 
 Large scale, real time, distributed combat management system with redundancy.
 
-Agile process, secondary team lead, RedMine for Project Management and Issue Tracking.
+\paragraph{Project:} Underwater Warfare Suite Upgrade.
 
-Writing Technical Statement of Requirement, Detailed Design, Implementation and Validation requirements, Version Briefs and Changelogs for product.
+\textbf{Design, Impliment} interface between CMS 330 and underwater subsystem created by General Dynamics Mission Systems - Canada.
 
-Investigating root causes of reported issues, writing reports of findings and recommendations to fix/mitigate issues, presenting findings to customer (Department of National Defense).
+\textbf{Design, Impliment} Human Machine Interface (HMI). View status of subsystem. Opertor facing controls to communicate with subsystem.
 
-Technical expert on 3D Radar subsystem and Underwater Warfare Suite Upgrade. Human-Machine Interface design using Java Swing. Maintained legacy C software library.
+\textbf{Investigate} software issues and network issues when connunicationg with subsystem.
 
-Primary software development tools: Java, JetBrains IntelliJ IDE, RTI DDS for interservice and subsystem communications, XML, SQL, Gradle, RedHat Enterprise Linux, PodMan Container, SVN version control, grep, find.
+\textbf{Documentation} write report and presentations for how CMS 330 works with subsystem, capabilities and limitations.
 
-\paragraph{Tutor/TA} \emph{Saint Mary's University} \hfill 2017 -- 2018\\
+\textbf{Documentation} writing Technical Statement of Requirement, Detailed Design, Implementation and Validation requirements, Version Briefs and Changelogs for product.
+
+\textbf{Tools used} RedHat Enterprise Linux (RHEL), C, C++, Java, Java Swing, JetBrains IntelliJ IDE, Gradle, XML, SQL, SVN, RTI DDS, VNC
+
+\paragraph{Project:} 3D Radar risk mitigation.
+
+\textbf{Investigate} issue with subsystem. Reproduce the issue. Writing change proposal with how to fix the issue and presenting to Department of National Defense (DND) for approval.
+
+\textbf{Design, Impliment} a software patch to mitigate the problem.
+
+\textbf{Documentation} write report and presentations showing how risk was mitigated and limitations of the fix.
+
+\textbf{Tools used} RHEL, C, C++, Java, JetBrains IntelliJ IDE, Gradle
+
+\paragraph{Project:} Training software update.
+
+\textbf{Design, Impliment} Human Machine Interface (HMI). Opertor facing controls to communicate with training environment.
+
+\textbf{Documentation} write report and presentations for how CMS 330 works with subsystem, capabilities and limitations.
+
+\textbf{Documentation} writing Technical Statement of Requirement, Detailed Design, Implementation and Validation requirements, Version Briefs and Changelogs for product.
+
+\textbf{Tools used} RHEL, C, C++, Java, JetBrains IntelliJ IDE, Gradle, SVN, RTI DDS, XML, SQL, SVN
+
+\paragraph{Non-project specific} Investigating root causes of reported issues, writing reports of findings and recommendations to fix or mitigate issues, presenting findings to customer DND. Agile process, secondary team lead, RedMine for Project Management and Issue Tracking.
+
+\vspace{1em}
+\textbf{\color{draculapurple}Tutor/TA}
+
+\emph{Saint Mary's University} \hfill 2017 -- 2018
+
 I assisted first year students with their physics, chemistry and math classes. I also assisted them in writing their lab reports and assignments.
 
-\paragraph{Software QA Analyst} \emph{Blackberry Ltd} \hfill 2015\\
-\emph{Product}: Blackberry Priv Smartphone\\
+\vspace{1em}
+\textbf{\color{draculapurple}Software QA Analyst}
+
+\emph{Blackberry Ltd} \hfill 2015
+
+\underline{Product: Blackberry Priv Smartphone}
+
 Automated testing,
 Scripted testing,
 Regression testing,
@@ -68,8 +140,13 @@ Black box testing,
 Bug reporting using JIRA,
 Bug recreation
 
-\paragraph{Manufacturing Quality Engineer} \emph{Synaptive Medical} \hfill 2014\\
-\emph{Product}: MODUS NAV\\
+\vspace{1em}
+\textbf{\color{draculapurple}Manufacturing Quality Engineer}
+
+\emph{Synaptive Medical} \hfill 2014
+
+\underline{Product: MODUS NAV}
+
 Bug reporting using JIRA,
 Black box testing,
 Exploratory testing,
@@ -77,29 +154,21 @@ Regression testing,
 Performance testing
 
 % \paragraph{Junior Developer} Norex
-% \begin{enumerate}
+% \begin{itemize}
 % \item Made website maintenance reports
 % \item Quality Assurance for websites
 % \item Created a search engine for the WordPress platform using PHP, SQL
-% \end{enumerate}
+% \end{itemize}
 % \end{multicols}
 
-\subsection*{\color{draculapurple}Education}
-\paragraph{Bachelor of Engineering} \emph{Dalhousie University} \hfill 2018 -- 2021\\
-Major: Computer Engineering
+%\input{resume/about_me}
 
-\paragraph{Diploma in Engineering} \emph{Saint Mary's University} \hfill 2016 -- 2018\\
-Dean's List
-
-\vfill
-\input{resume/about_me}
-
-\subsection*{\color{draculapurple}Skills}
+\cvsection{Skills}
+C/C++,
 Agile Process,
 Story Creation,
 Story Valadation,
 Report Writing and Presentations,
-C/C++,
 Java,
 Python,
 NumPy,
@@ -118,12 +187,12 @@ Benchmarking,
 Quality Assurance,
 Circuit Building,
 Hardware Testing,
-Software Testing,
+Software Testing
 
-\subsection*{\color{draculapurple}Languages}
+\cvsection{Languages}
 \textbf{English} Fluent Reading, Fluent Writing, Fluent Speaking\\
 \textbf{Bangla} Beginner Speaking
 
-\subsection*{\color{draculapurple}References}
+\cvsection{References}
 References and other supporting documents are available upon request.
 \end{document}
