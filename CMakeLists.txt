@@ -23,15 +23,3 @@ file(GLOB_RECURSE SRC_FILES
     ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
-target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system)
-
-file(GLOB_RECURSE LEET_CPP_CODE
-    CONFIGURE_DEPENDS # Automatically reconfigure if source files are added/removed.
-    ${PROJECT_SOURCE_DIR}/leet_cpp/*.cpp)
-add_executable(leet_cpp ${LEET_CPP_CODE})
-
-file(GLOB_RECURSE LEET_C_CODE
-    CONFIGURE_DEPENDS # Automatically reconfigure if source files are added/removed.
-    ${PROJECT_SOURCE_DIR}/leet_c/*.c)
-add_executable(leet_c ${LEET_C_CODE})
-target_link_libraries(leet_c PRIVATE SDL2)
