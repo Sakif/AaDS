@@ -1,7 +1,8 @@
 #include "test.hpp"
 #include <cstdlib>
 
-int main()
+int
+main()
 {
   test_list_int();
 

@@ -55,8 +55,8 @@ public:
 
   /**/
   node *find(t const &) const;
-  /**/
-  int count(t const &) const;
+  /* Returns the number of nodes in the linked list storing a value equal to the argument. (O(n)) */
+  unsigned count(t const &) const;
 
   /* mutators */
   void swap(double_sentinel_list &);
@@ -86,25 +86,30 @@ private:
 };
 
 /* node */
+/* constructors */
 template <typename t>
 double_sentinel_list<t>::node::node(
     t const &nv, node *pn, node *nn)
     : node_value(nv), previous_node(pn), next_node(nn) {}
 
+/* accessors */
 template <typename t>
-typename double_sentinel_list<t>::node *double_sentinel_list<t>::node::previous() const
+typename double_sentinel_list<t>::node *
+double_sentinel_list<t>::node::previous() const
 {
   return previous_node;
 }
 
 template <typename t>
-typename double_sentinel_list<t>::node *double_sentinel_list<t>::node::next() const
+typename double_sentinel_list<t>::node *
+double_sentinel_list<t>::node::next() const
 {
   return next_node;
 }
 
 template <typename t>
-t double_sentinel_list<t>::node::value() const
+t
+double_sentinel_list<t>::node::value() const
 {
   return node_value;
 }
@@ -121,19 +126,26 @@ double_sentinel_list<t>::double_sentinel_list()
 template <typename t>
 double_sentinel_list<t>::~double_sentinel_list()
 {
+  while (!empty())
+  {
+    pop_front();
+  }
+
   delete list_head;
   delete list_tail;
 }
 
 /* accessors */
 template <typename t>
-unsigned double_sentinel_list<t>::size() const
+unsigned
+double_sentinel_list<t>::size() const
 {
   return list_size;
 }
 
 template <typename t>
-bool double_sentinel_list<t>::empty() const
+bool
+double_sentinel_list<t>::empty() const
 {
   return size() == 0 &&
          begin() == end() &&
@@ -141,7 +153,8 @@ bool double_sentinel_list<t>::empty() const
 }
 
 template <typename t>
-t double_sentinel_list<t>::front() const
+t
+double_sentinel_list<t>::front() const
 {
   if (empty())
   {
@@ -152,7 +165,8 @@ t double_sentinel_list<t>::front() const
 }
 
 template <typename t>
-t double_sentinel_list<t>::back() const
+t
+double_sentinel_list<t>::back() const
 {
   if (empty())
   {
@@ -163,31 +177,52 @@ t double_sentinel_list<t>::back() const
 }
 
 template <typename t>
-typename double_sentinel_list<t>::node *double_sentinel_list<t>::begin() const
+typename double_sentinel_list<t>::node *
+double_sentinel_list<t>::begin() const
 {
   return rend()->next();
 }
 
 template <typename t>
-typename double_sentinel_list<t>::node *double_sentinel_list<t>::end() const
+typename double_sentinel_list<t>::node *
+double_sentinel_list<t>::end() const
 {
   return list_tail;
 }
 
 template <typename t>
-typename double_sentinel_list<t>::node *double_sentinel_list<t>::rbegin() const
+typename double_sentinel_list<t>::node *
+double_sentinel_list<t>::rbegin() const
 {
   return end()->previous();
 }
 
 template <typename t>
-typename double_sentinel_list<t>::node *double_sentinel_list<t>::rend() const
+typename double_sentinel_list<t>::node *
+double_sentinel_list<t>::rend() const
 {
   return list_head;
 }
 
 template <typename t>
-void double_sentinel_list<t>::push_front(t const &v)
+unsigned
+double_sentinel_list<t>::count(const t &v) const
+{
+  auto count = 0U;
+  for (auto n = begin(); n != end(); n = n->next())
+  {
+    if (n->value() == v)
+    {
+      count++;
+    }
+  }
+  return count;
+}
+
+/* mutators */
+template <typename t>
+void
+double_sentinel_list<t>::push_front(t const &v)
 {
   auto node = new double_sentinel_list<t>::node(v, rend(), begin());
   begin()->previous_node = node;
@@ -196,12 +231,45 @@ void double_sentinel_list<t>::push_front(t const &v)
 }
 
 template <typename t>
-void double_sentinel_list<t>::push_back(t const &v)
+void
+double_sentinel_list<t>::push_back(t const &v)
 {
   auto node = new double_sentinel_list<t>::node(v, rbegin(), end());
   rbegin()->next_node = node;
   end()->previous_node = node;
   list_size++;
+}
+
+template <typename t>
+void
+double_sentinel_list<t>::pop_front()
+{
+  if (empty())
+  {
+    throw std::underflow_error("List is empty!");
+  }
+
+  auto nTdel = begin();
+  nTdel->previous()->next_node = nTdel->next();
+  nTdel->next()->previous_node = nTdel->previous();
+  delete nTdel;
+  list_size--;
+}
+
+template <typename t>
+void
+double_sentinel_list<t>::pop_back()
+{
+  if (empty())
+  {
+    throw std::underflow_error("List is empty!");
+  }
+
+  auto nTdel = rbegin();
+  nTdel->previous()->next_node = nTdel->next();
+  nTdel->next()->previous_node = nTdel->previous();
+  delete nTdel;
+  list_size--;
 }
 
 #endif

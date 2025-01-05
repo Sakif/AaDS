@@ -1,5 +1,6 @@
 ---
 BasedOnStyle: LLVM
 ColumnLimit: 0
+AlwaysBreakAfterDefinitionReturnType: All
 BreakBeforeBraces: Allman
 MaxEmptyLinesToKeep: 1

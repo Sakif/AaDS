@@ -1,11 +1,11 @@
 #include "double_sentinel_list.hpp"
 #include "test.hpp"
 #include <cassert>
-#include <iostream>
 
 using namespace std;
 
-void test_list_int()
+void
+test_list_int()
 {
   double_sentinel_list<int> list;
   assert(list.size() == 0);
@@ -43,6 +43,29 @@ void test_list_int()
   assert(list.front() == 5);
   assert(list.size() == 3);
   assert(list.back() == 500);
+
+  assert(list.count(500) == 1);
+
+  for (auto i = 0U; i < 5; i++)
+  {
+    list.push_back(17);
+    list.push_front(17);
+  }
+
+  assert(list.count(17) == 10);
+  assert(list.count(7) == 0);
+  assert(list.size() == 13);
+
+  while (list.front() != 5)
+  {
+    list.pop_front();
+  }
+  assert(list.size() == 8);
+
+  while (list.back() != 500)
+  {
+    list.pop_back();
+  }
 
   cout << "\nList front to back:\n";
   for (auto n = list.begin(); n != list.end(); n = n->next())
