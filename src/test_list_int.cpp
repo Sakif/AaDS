@@ -1,0 +1,58 @@
+#include "double_sentinel_list.hpp"
+#include "test.hpp"
+#include <cassert>
+#include <iostream>
+
+using namespace std;
+
+void test_list_int()
+{
+  double_sentinel_list<int> list;
+  assert(list.size() == 0);
+  assert(list.empty());
+
+  try
+  {
+    list.front();
+  }
+  catch (underflow_error e)
+  {
+    cout << e.what() << endl;
+  }
+
+  try
+  {
+    list.back();
+  }
+  catch (underflow_error e)
+  {
+    cout << e.what() << endl;
+  }
+
+  list.push_front(50);
+  assert(list.front() == 50);
+  assert(!list.empty());
+  assert(list.size() == 1);
+  assert(list.back() == 50);
+
+  list.push_front(5);
+  assert(list.front() == 5);
+  assert(list.back() == 50);
+
+  list.push_back(500);
+  assert(list.front() == 5);
+  assert(list.size() == 3);
+  assert(list.back() == 500);
+
+  cout << "\nList front to back:\n";
+  for (auto n = list.begin(); n != list.end(); n = n->next())
+  {
+    cout << n->value() << endl;
+  }
+
+  cout << "\nList back to front:\n";
+  for (auto n = list.rbegin(); n != list.rend(); n = n->previous())
+  {
+    cout << n->value() << endl;
+  }
+}

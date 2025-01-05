@@ -7,6 +7,7 @@ if [ ! -d "$dir" ];then
 fi
 
 mold -run cmake --build $dir
+./build/bol
 
 # latexmk -pdf resume/resume.tex
 # gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.7 -dNOPAUSE -dQUIET -dBATCH -dPrinted=false -sOutputFile=SAKIF_FAHMID_ZAMAN.pdf resume.pdf

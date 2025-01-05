@@ -1,4 +1,9 @@
+#include "test.hpp"
+#include <cstdlib>
+
 int main()
 {
-  return 0;
+  test_list_int();
+
+  return EXIT_SUCCESS;
 }

@@ -10,8 +10,8 @@ add_compile_options(-Wall -Wextra -Werror
 
 add_link_options(-flto -fstrict-aliasing)
 
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_C_STANDARD 23)
+#set(CMAKE_CXX_STANDARD 23)
+#set(CMAKE_C_STANDARD 23)
 set(CMAKE_CXX_EXTENSIONS ON)
 set(CMAKE_C_EXTENSIONS ON)
 
