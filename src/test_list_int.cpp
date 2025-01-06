@@ -56,6 +56,11 @@ test_list_int()
   assert(list.count(7) == 0);
   assert(list.size() == 13);
 
+  auto node = list.find(5);
+  assert(node->value() == 5);
+  node = list.find(4);
+  assert(node == list.end());
+
   while (list.front() != 5)
   {
     list.pop_front();

@@ -39,23 +39,31 @@ public:
   /* Returns true if the list is empty, false otherwise. (O(1)) */
   bool empty() const;
 
-  /* Retrieves the object stored in the node pointed to by the next pointer of the head sentinel. This function throws a underflow if the list is empty. (O(1)) */
+  /* Retrieves the object stored in the node pointed to by the next pointer of
+   * the head sentinel. This function throws a underflow if the list is empty.
+   * (O(1)) */
   t front() const;
-  /* Retrieves the object stored in the node pointed to by the previous pointer of the tail sentinel. This function throws a underflow if the list is empty. (O(1)) */
+  /* Retrieves the object stored in the node pointed to by the previous pointer
+   * of the tail sentinel. This function throws a underflow if the list is
+   * empty. (O(1)) */
   t back() const;
 
-  /* Returns the address stored by the next pointer of the head sentinel node. (O(1)) */
+  /* Returns the address stored by the next pointer of the head sentinel node.
+   * (O(1)) */
   node *begin() const;
   /* Returns the address of the tail sentinel node. (O(1)) */
   node *end() const;
-  /* Returns the address stored by the previous pointer of the tail sentinel node. (O(1)) */
+  /* Returns the address stored by the previous pointer of the tail sentinel
+   * node. (O(1)) */
   node *rbegin() const;
   /* Returns the address of the head sentinel node. (O(1)) */
   node *rend() const;
 
-  /**/
+  /* Returns the address of the first node in the linked list storing a value
+   * equal to the argument; if none is found, return end(). (O(n)) */
   node *find(t const &) const;
-  /* Returns the number of nodes in the linked list storing a value equal to the argument. (O(n)) */
+  /* Returns the number of nodes in the linked list storing a value equal to the
+   * argument. (O(n)) */
   unsigned count(t const &) const;
 
   /* mutators */
@@ -63,21 +71,32 @@ public:
   double_sentinel_list &operator=(double_sentinel_list);
   double_sentinel_list &operator=(double_sentinel_list &&);
 
-  /* Creates a new Double_node<Type> storing the argument new_value, the next pointer of which is set to the next pointer of the sentinel and the previous pointer is set to point to the sentinel. The next pointer of the sentinel and the previous pointer of what was the first node are set to this new node. (O(1)) */
+  /* Creates a new Double_node<Type> storing the argument new_value, the next
+   * pointer of which is set to the next pointer of the sentinel and the
+   * previous pointer is set to point to the sentinel. The next pointer of the
+   * sentinel and the previous pointer of what was the first node are set to
+   * this new node. (O(1)) */
   void push_front(t const &);
-  /* Similar to push_front, this places a new node at the back of the list storing the argument new_value. (O(1)) */
+  /* Similar to push_front, this places a new node at the back of the list
+   * storing the argument new_value. (O(1)) */
   void push_back(t const &);
 
-  /* Delete the first non-sentinel node at the front of the linked list and update the previous and next pointers of any other node (including possibly the sentinels) within the list as necessary. Throw an underflow exception if the list is empty. (O(1)) */
+  /* Delete the first non-sentinel node at the front of the linked list and
+   * update the previous and next pointers of any other node (including possibly
+   * the sentinels) within the list as necessary. Throw an underflow exception
+   * if the list is empty. (O(1)) */
   void pop_front();
-  /* Similar to pop_front, delete the last non-sentinel node in the list. This function throws a underflow if the list is empty. (O(1)) */
+  /* Similar to pop_front, delete the last non-sentinel node in the list. This
+   * function throws a underflow if the list is empty. (O(1)) */
   void pop_back();
 
   int erase(t const &);
 
   /* friends */
   template <typename T>
-  friend std::ostream &operator<<(std::ostream &, double_sentinel_list<T> const &);
+  friend std::ostream &operator<<(
+      std::ostream &,
+      double_sentinel_list<T> const &);
 
 private:
   node *list_head;
@@ -88,9 +107,10 @@ private:
 /* node */
 /* constructors */
 template <typename t>
-double_sentinel_list<t>::node::node(
-    t const &nv, node *pn, node *nn)
-    : node_value(nv), previous_node(pn), next_node(nn) {}
+double_sentinel_list<t>::node::node(t const &nv, node *pn, node *nn)
+    : node_value(nv), previous_node(pn), next_node(nn)
+{
+}
 
 /* accessors */
 template <typename t>
@@ -147,9 +167,7 @@ template <typename t>
 bool
 double_sentinel_list<t>::empty() const
 {
-  return size() == 0 &&
-         begin() == end() &&
-         rbegin() == rend();
+  return size() == 0 && begin() == end() && rbegin() == rend();
 }
 
 template <typename t>
@@ -205,6 +223,20 @@ double_sentinel_list<t>::rend() const
 }
 
 template <typename t>
+typename double_sentinel_list<t>::node *
+double_sentinel_list<t>::find(const t &v) const
+{
+  for (auto n = begin(); n != end(); n = n->next())
+  {
+    if (n->value() == v)
+    {
+      return n;
+    }
+  }
+  return end();
+}
+
+template <typename t>
 unsigned
 double_sentinel_list<t>::count(const t &v) const
 {
@@ -249,10 +281,10 @@ double_sentinel_list<t>::pop_front()
     throw std::underflow_error("List is empty!");
   }
 
-  auto nTdel = begin();
-  nTdel->previous()->next_node = nTdel->next();
-  nTdel->next()->previous_node = nTdel->previous();
-  delete nTdel;
+  auto to_del = begin();
+  to_del->previous()->next_node = to_del->next();
+  to_del->next()->previous_node = to_del->previous();
+  delete to_del;
   list_size--;
 }
 
@@ -265,10 +297,10 @@ double_sentinel_list<t>::pop_back()
     throw std::underflow_error("List is empty!");
   }
 
-  auto nTdel = rbegin();
-  nTdel->previous()->next_node = nTdel->next();
-  nTdel->next()->previous_node = nTdel->previous();
-  delete nTdel;
+  auto to_del = rbegin();
+  to_del->previous()->next_node = to_del->next();
+  to_del->next()->previous_node = to_del->previous();
+  delete to_del;
   list_size--;
 }
 
