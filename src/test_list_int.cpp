@@ -29,6 +29,24 @@ test_list_int()
     cout << e.what() << endl;
   }
 
+  try
+  {
+    list.pop_back();
+  }
+  catch (underflow_error e)
+  {
+    cout << e.what() << endl;
+  }
+
+  try
+  {
+    list.pop_front();
+  }
+  catch (underflow_error e)
+  {
+    cout << e.what() << endl;
+  }
+
   list.push_front(50);
   assert(list.front() == 50);
   assert(!list.empty());
@@ -46,18 +64,21 @@ test_list_int()
 
   assert(list.count(500) == 1);
 
-  for (auto i = 0U; i < 5; i++)
+  for (auto i = 0; i < 5; i++)
   {
     list.push_back(17);
     list.push_front(17);
+    list.push_back(19);
   }
 
   assert(list.count(17) == 10);
   assert(list.count(7) == 0);
-  assert(list.size() == 13);
+  assert(list.size() == 18);
 
   auto node = list.find(5);
   assert(node->value() == 5);
+  assert(node->next()->value() == 50);
+  assert(node->previous()->value() == 17);
   node = list.find(4);
   assert(node == list.end());
 
@@ -65,22 +86,10 @@ test_list_int()
   {
     list.pop_front();
   }
-  assert(list.size() == 8);
-
-  while (list.back() != 500)
-  {
-    list.pop_back();
-  }
-
-  cout << "\nList front to back:\n";
-  for (auto n = list.begin(); n != list.end(); n = n->next())
-  {
-    cout << n->value() << endl;
-  }
-
-  cout << "\nList back to front:\n";
-  for (auto n = list.rbegin(); n != list.rend(); n = n->previous())
-  {
-    cout << n->value() << endl;
-  }
+  assert(list.size() == 13);
+  assert(list.erase(17) == 5);
+  assert(list.count(19) == 5);
+  assert(list.back() == 19);
+  cout << "\nList print:\n"
+       << list << endl;
 }

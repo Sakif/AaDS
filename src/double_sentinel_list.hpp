@@ -67,6 +67,7 @@ public:
   unsigned count(t const &) const;
 
   /* mutators */
+
   void swap(double_sentinel_list &);
   double_sentinel_list &operator=(double_sentinel_list);
   double_sentinel_list &operator=(double_sentinel_list &&);
@@ -90,7 +91,11 @@ public:
    * function throws a underflow if the list is empty. (O(1)) */
   void pop_back();
 
-  int erase(t const &);
+  /* Delete all the nodes in the linked list that have a value equal to the
+   * argument value. Update the previous and next pointers of any other node
+   * (including possibly the sentinels) within the list. Return the number of
+   * nodes that were deleted. (O(n)) */
+  unsigned erase(t const &);
 
   /* friends */
   template <typename T>
@@ -176,7 +181,7 @@ double_sentinel_list<t>::front() const
 {
   if (empty())
   {
-    throw std::underflow_error("List is empty!");
+    throw std::underflow_error("Cannot fetch item at front, list is empty.");
   }
 
   return begin()->value();
@@ -188,7 +193,7 @@ double_sentinel_list<t>::back() const
 {
   if (empty())
   {
-    throw std::underflow_error("List is empty!");
+    throw std::underflow_error("Cannot fetch item at back, list is empty.");
   }
 
   return rbegin()->value();
@@ -226,11 +231,11 @@ template <typename t>
 typename double_sentinel_list<t>::node *
 double_sentinel_list<t>::find(const t &v) const
 {
-  for (auto n = begin(); n != end(); n = n->next())
+  for (auto itr = begin(); itr != end(); itr = itr->next())
   {
-    if (n->value() == v)
+    if (itr->value() == v)
     {
-      return n;
+      return itr;
     }
   }
   return end();
@@ -241,9 +246,9 @@ unsigned
 double_sentinel_list<t>::count(const t &v) const
 {
   auto count = 0U;
-  for (auto n = begin(); n != end(); n = n->next())
+  for (auto node = begin(); node != end(); node = node->next())
   {
-    if (n->value() == v)
+    if (node->value() == v)
     {
       count++;
     }
@@ -278,7 +283,7 @@ double_sentinel_list<t>::pop_front()
 {
   if (empty())
   {
-    throw std::underflow_error("List is empty!");
+    throw std::underflow_error("Cannot pop front, list is empty.");
   }
 
   auto to_del = begin();
@@ -294,7 +299,7 @@ double_sentinel_list<t>::pop_back()
 {
   if (empty())
   {
-    throw std::underflow_error("List is empty!");
+    throw std::underflow_error("Cannot pop back, list is empty.");
   }
 
   auto to_del = rbegin();
@@ -302,6 +307,90 @@ double_sentinel_list<t>::pop_back()
   to_del->next()->previous_node = to_del->previous();
   delete to_del;
   list_size--;
+}
+
+template <typename t>
+unsigned
+double_sentinel_list<t>::erase(t const &v)
+{
+  auto count = 0U;
+  for (auto itr = begin(); itr != end(); itr = itr->next())
+  {
+    if (itr->value() == v)
+    {
+      auto to_del = itr;
+      itr = to_del->previous();
+      to_del->previous()->next_node = to_del->next();
+      to_del->next()->previous_node = to_del->previous();
+      delete to_del;
+      list_size--;
+      count++;
+    }
+  }
+  return count;
+}
+
+template <typename t>
+void
+double_sentinel_list<t>::swap(double_sentinel_list<t> &list)
+{
+  std::swap(list_head, list.list_head);
+  std::swap(list_tail, list.list_tail);
+  std::swap(list_size, list.list_size);
+}
+
+template <typename t>
+double_sentinel_list<t> &
+double_sentinel_list<t>::operator=(double_sentinel_list<t> rhs)
+{
+  swap(rhs);
+  return *this;
+}
+
+template <typename t>
+double_sentinel_list<t> &
+double_sentinel_list<t>::operator=(double_sentinel_list<t> &&rhs)
+{
+  swap(rhs);
+  return *this;
+}
+
+template <typename T>
+std::ostream &
+operator<<(std::ostream &out, double_sentinel_list<T> const &l)
+{
+  out << "head";
+
+  for (auto ptr = l.rend(); ptr != nullptr; ptr = ptr->next())
+  {
+    if (ptr == l.rend() || ptr == l.end())
+    {
+      out << "->S";
+    }
+    else
+    {
+      out << "->" << ptr->value();
+    }
+  }
+
+  out << "->0" << std::endl
+      << "tail";
+
+  for (auto ptr = l.end(); ptr != nullptr; ptr = ptr->previous())
+  {
+    if (ptr == l.rend() || ptr == l.end())
+    {
+      out << "->S";
+    }
+    else
+    {
+      out << "->" << ptr->value();
+    }
+  }
+
+  out << "->0";
+
+  return out;
 }
 
 #endif
