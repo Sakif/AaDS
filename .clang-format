@@ -4,3 +4,4 @@ ColumnLimit: 0
 AlwaysBreakAfterDefinitionReturnType: All
 BreakBeforeBraces: Allman
 MaxEmptyLinesToKeep: 1
+AllowAllParametersOfDeclarationOnNextLine: true

@@ -70,6 +70,7 @@ test_list_int()
     list.push_front(17);
     list.push_back(19);
   }
+  auto list2 = double_sentinel_list<int>(list);
 
   assert(list.count(17) == 10);
   assert(list.count(7) == 0);
@@ -90,6 +91,9 @@ test_list_int()
   assert(list.erase(17) == 5);
   assert(list.count(19) == 5);
   assert(list.back() == 19);
-  cout << "\nList print:\n"
-       << list << endl;
+  cout << list << endl;
+  cout << list2 << endl;
+  list2 = list;
+  list.pop_back();
+  cout << list2 << endl;
 }
