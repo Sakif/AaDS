@@ -160,15 +160,19 @@ double_sentinel_list<t>::node::value() const
 /* constructors */
 template <typename t>
 double_sentinel_list<t>::double_sentinel_list()
-    : list_head(new node()), list_tail(new node(t(), list_head)), list_size(0U)
+    : list_size(0U)
 {
+  list_head = new node();
+  list_tail = new node(t(), list_head);
   list_head->next_node = list_tail;
 }
 
 template <typename t>
 double_sentinel_list<t>::double_sentinel_list(
     const double_sentinel_list<t> &l)
-    : list_head(new node()), list_tail(new node(t(), list_head)), list_size(0U)
+    : list_head(new node()),
+      list_tail(new node(t(), list_head)),
+      list_size(0U)
 {
   list_head->next_node = list_tail;
   for (auto n = l.begin(); n != l.end(); n = n->next())

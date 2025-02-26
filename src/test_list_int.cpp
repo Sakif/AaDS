@@ -15,7 +15,7 @@ test_list_int()
   {
     list.front();
   }
-  catch (underflow_error e)
+  catch (const exception &e)
   {
     cout << e.what() << endl;
   }
@@ -24,7 +24,7 @@ test_list_int()
   {
     list.back();
   }
-  catch (underflow_error e)
+  catch (const exception &e)
   {
     cout << e.what() << endl;
   }
@@ -33,7 +33,7 @@ test_list_int()
   {
     list.pop_back();
   }
-  catch (underflow_error e)
+  catch (const exception &e)
   {
     cout << e.what() << endl;
   }
