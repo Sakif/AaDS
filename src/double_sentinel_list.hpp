@@ -175,7 +175,7 @@ double_sentinel_list<t>::double_sentinel_list(
       list_size(0U)
 {
   list_head->next_node = list_tail;
-  for (auto n = l.begin(); n != l.end(); n = n->next())
+  for (node *n = l.begin(); n != l.end(); n = n->next())
   {
     push_front(n->value());
   }
@@ -216,7 +216,6 @@ double_sentinel_list<t>::front() const
   {
     throw std::underflow_error("Cannot fetch item at front, list is empty.");
   }
-
   return begin()->value();
 }
 
@@ -228,7 +227,6 @@ double_sentinel_list<t>::back() const
   {
     throw std::underflow_error("Cannot fetch item at back, list is empty.");
   }
-
   return rbegin()->value();
 }
 
@@ -262,9 +260,10 @@ double_sentinel_list<t>::rend() const
 
 template <typename t>
 typename double_sentinel_list<t>::node *
-double_sentinel_list<t>::find(const t &v) const
+double_sentinel_list<t>::find(
+    const t &v) const
 {
-  for (auto itr = begin(); itr != end(); itr = itr->next())
+  for (node *itr = begin(); itr != end(); itr = itr->next())
   {
     if (itr->value() == v)
     {
@@ -276,12 +275,13 @@ double_sentinel_list<t>::find(const t &v) const
 
 template <typename t>
 unsigned
-double_sentinel_list<t>::count(const t &v) const
+double_sentinel_list<t>::count(
+    const t &v) const
 {
-  auto count = 0U;
-  for (auto node = begin(); node != end(); node = node->next())
+  unsigned count = 0U;
+  for (node *n = begin(); n != end(); n = n->next())
   {
-    if (node->value() == v)
+    if (n->value() == v)
     {
       count++;
     }
@@ -321,7 +321,7 @@ double_sentinel_list<t>::pop_front()
     throw std::underflow_error("Cannot pop front, list is empty.");
   }
 
-  auto to_del = begin();
+  node *to_del = begin();
   to_del->previous()->next_node = to_del->next();
   to_del->next()->previous_node = to_del->previous();
   delete to_del;
@@ -337,7 +337,7 @@ double_sentinel_list<t>::pop_back()
     throw std::underflow_error("Cannot pop back, list is empty.");
   }
 
-  auto to_del = rbegin();
+  node *to_del = rbegin();
   to_del->previous()->next_node = to_del->next();
   to_del->next()->previous_node = to_del->previous();
   delete to_del;
@@ -349,8 +349,8 @@ unsigned
 double_sentinel_list<t>::erase(
     t const &v)
 {
-  auto count = 0U;
-  for (auto itr = begin(); itr != end(); itr = itr->next())
+  unsigned count = 0U;
+  for (node *itr = begin(); itr != end(); itr = itr->next())
   {
     if (itr->value() == v)
     {
@@ -413,7 +413,6 @@ operator<<(
       out << "->" << ptr->value();
     }
   }
-
   out << "->0" << std::endl
       << "tail";
 
@@ -428,7 +427,6 @@ operator<<(
       out << "->" << ptr->value();
     }
   }
-
   out << "->0";
 
   return out;

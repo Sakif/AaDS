@@ -1,6 +1,7 @@
 #include "double_sentinel_list.hpp"
 #include "test.hpp"
 #include <cassert>
+#include <exception>
 
 using namespace std;
 
@@ -42,7 +43,7 @@ test_list_int()
   {
     list.pop_front();
   }
-  catch (underflow_error e)
+  catch (const exception &e)
   {
     cout << e.what() << endl;
   }

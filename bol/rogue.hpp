@@ -1,8 +1,9 @@
 #ifndef ROGUE_HPP
 #define ROGUE_HPP
 
+#include <cstdlib>
+#include <ctime>
 #include <ncurses.h>
-#include <stdlib.h>
 
 #define MAP_HEIGHT 25
 #define MAP_WIDTH 100
@@ -25,6 +26,14 @@ typedef struct
   bool walkable;
 } Tile;
 
+typedef struct
+{
+  int height;
+  int width;
+  Position pos;
+  Position center;
+} Room;
+
 // externs
 extern Entity *player;
 
@@ -44,5 +53,11 @@ void freeMap(void);
 void drawMap(void);
 void drawEntity(Entity *entity);
 void drawEverything(void);
+
+Room createRoom(int y, int x, int height, int width);
+void addRoomToMap(Room room);
+
+int window_a();
+int menu();
 
 #endif

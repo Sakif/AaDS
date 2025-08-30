@@ -56,15 +56,15 @@ dynamic_deque<t>::dynamic_deque(
       array_capacity(initial_array_capacity),
       deque_size(0),
       ifront(0),
-      iback(0)
+      iback(0),
+      array(new t[array_capacity])
 {
-  array = new t[array_capacity];
 }
 
 template <typename t>
 dynamic_deque<t>::~dynamic_deque()
 {
-  delete array;
+  delete[] array;
 }
 
 template <typename t>
