@@ -1,9 +1,11 @@
 #include "constants.hpp"
+#include <cstdio>
 
 int
 main()
 {
   auto c = window_size.componentWiseDiv(tile_size);
-  auto tot = c.x * c.y;
+  unsigned tot = c.x * c.y;
+  printf("Total: %d\n", tot);
   return 0;
 }

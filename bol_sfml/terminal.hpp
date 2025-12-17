@@ -8,10 +8,12 @@
 class terminal
 {
 private:
-  const sf::Vector2<unsigned int> console = window_size.componentWiseDiv(tile_size);
+  const sf::Vector2<int> console = window_size.componentWiseDiv(tile_size);
   std::vector<sf::Vector2<int>> array;
 
 public:
+  terminal();
+
   void draw(sf::RenderWindow &w);
 };
 

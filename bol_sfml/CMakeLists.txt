@@ -14,7 +14,11 @@ file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS # Automatically reconfigure if sou
   ${PROJECT_SOURCE_DIR}/*.cpp)
 add_executable(${PROJECT_NAME} ${SRC_FILES})
 target_link_libraries(${PROJECT_NAME} PRIVATE SFML::Graphics)
-# target_compile_options(${PROJECT_NAME} PUBLIC -Weverything -Wno-c++98-compat -Wpedantic -Werror -m64 -march=native -mtune=native)
-# -Weverything -Wno-c++98-compat -Wall -Wextra -Oz -g0
+
+IF (WIN32)
+  target_compile_options(${PROJECT_NAME} PUBLIC -Weverything -Wno-c++98-compat -Wpedantic -Werror -m64 -march=native -mtune=native -g0)
+ELSE()
+  target_compile_options(${PROJECT_NAME} PUBLIC -Wall -Wextra -Wpedantic -Werror -m64 -march=native -mtune=native -g0)
+ENDIF()
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
 set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
