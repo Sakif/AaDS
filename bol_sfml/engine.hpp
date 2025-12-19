@@ -1,12 +1,15 @@
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 
-#include <SFML/Graphics.hpp>
+#include "display_matrix.hpp"
 
 class engine
 {
 private:
   sf::RenderWindow w;
+  const sf::Texture packed;
+  const sf::Vector2<unsigned> tile_size;
+  display_matrix console;
 
 public:
   engine();
