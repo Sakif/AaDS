@@ -10,8 +10,10 @@ private:
 
 public:
   engine();
-
   bool is_open() const;
+
+  void handel_event();
+  void draw();
 };
 
 #endif

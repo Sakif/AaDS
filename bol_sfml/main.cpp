@@ -1,11 +1,15 @@
-#include "constants.hpp"
-#include <cstdio>
+#include "engine.hpp"
 
 int
 main()
 {
-  auto c = window_size.componentWiseDiv(tile_size);
-  unsigned tot = c.x * c.y;
-  printf("Total: %d\n", tot);
+  engine game;
+
+  while (game.is_open())
+  {
+    game.handel_event();
+    game.draw();
+  }
+
   return 0;
 }
