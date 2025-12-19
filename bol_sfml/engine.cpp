@@ -1,5 +1,6 @@
 #include "engine.hpp"
 #include "display_sprite.hpp"
+#include <SFML/System/Vector2.hpp>
 
 using namespace sf;
 
@@ -9,8 +10,8 @@ engine::engine()
           "Wee",
           Style::Close),
       packed("asset/mono_packed.png"),
-      tile_size({16, 16}),
-      console(w.getSize().componentWiseDiv(tile_size))
+      tile_size(16, 16),
+      console(w.getSize())
 {
   w.setFramerateLimit(60);
   w.setVerticalSyncEnabled(true);
@@ -45,9 +46,25 @@ void
 engine::draw()
 {
   w.clear();
-  display_sprite at({41, 20});
-  Sprite s(packed, at.packed_rect(tile_size));
-  s.setColor(Color::Green);
-  w.draw(s);
+  display_sprite at({41, 20}, Color::Red); /* at {41, 20} */
+
+  console.set_at(at, 5, 7);
+  Sprite s(packed);
+  for (auto x = 0U; x < 80; x++)
+  {
+    for (auto y = 0U; y < 50; y++)
+    {
+      auto ds = console.at(x, y);
+      s.setTextureRect(ds.packed_rect(tile_size));
+      s.setColor(ds.get_colour());
+      s.setPosition(Vector2<float>(tile_size).componentWiseMul({static_cast<float>(x), static_cast<float>(y)}));
+      w.draw(s);
+    }
+  }
+
+  // s.setTextureRect(at.packed_rect(tile_size));
+  // s.setColor(at.get_colour());
+  // w.draw(s);
+
   w.display();
 }

@@ -1,19 +1,21 @@
 #ifndef DISPLAY_SPRITE_HPP
 #define DISPLAY_SPRITE_HPP
 
-#include <SFML/Graphics/Rect.hpp>
-#include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics.hpp>
 
 class display_sprite
 {
 private:
-  const sf::Vector2<unsigned> index;
+  sf::Vector2<unsigned> index;
+  sf::Color colour;
 
 public:
-  display_sprite(sf::Vector2<unsigned> i = {0, 0});
+  /* Constructor */
+  display_sprite(sf::Vector2<unsigned> i = {1, 1}, sf::Color c = sf::Color::Green);
 
-  sf::Vector2<int> packed_start_index(const sf::Vector2<unsigned> tile_size) const;
+  /* Accessors */
   sf::Rect<int> packed_rect(const sf::Vector2<unsigned> tile_size) const;
+  sf::Color get_colour() const;
 };
 
 #endif
