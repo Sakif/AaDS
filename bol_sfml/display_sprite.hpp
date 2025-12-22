@@ -11,7 +11,7 @@ private:
 
 public:
   /* Constructor */
-  display_sprite(sf::Vector2<unsigned> i = {1, 1}, sf::Color c = sf::Color::Green);
+  display_sprite(sf::Vector2<unsigned> i = {0, 0}, sf::Color c = sf::Color::White);
 
   /* Accessors */
   sf::Rect<int> packed_rect(const sf::Vector2<unsigned> tile_size) const;
