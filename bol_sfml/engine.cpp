@@ -1,5 +1,4 @@
 #include "engine.hpp"
-#include "display_sprite.hpp"
 
 using namespace sf;
 
@@ -7,10 +6,14 @@ engine::engine()
     : w(
           VideoMode({1280, 720}),
           "Wee"),
-      console(w.getSize())
+      packed("asset/mono_packed.png")
 {
   w.setFramerateLimit(60);
   w.setVerticalSyncEnabled(true);
+
+  world.entity("Player")
+      .set<sprite_c>({41, 20, Color::White})
+      .set<position_c>({5, 7});
 }
 
 bool
@@ -42,17 +45,12 @@ void
 engine::draw()
 {
   w.clear();
-  display_sprite at({41, 20}, Color::Red); /* at gliph {41, 20} */
-  console.set_at(at, 5, 7);
 
-  for (unsigned x = 0; x < console.get_dimention().x; x++)
-  {
-    for (unsigned y = 0; y < console.get_dimention().y; y++)
-    {
-      Sprite sp = console.sprite_at(x, y);
-      w.draw(sp);
-    }
-  }
+  world.each([](sprite_c &s, position_c &p)
+             { printf("Sprinte (%d, %d) %d\nPosition: (%d,%d)\n", s.x, s.y, s.colour.toInteger(), p.x, p.y); });
+
+  // display_sprite at({41, 20}, Color::Red); /* at gliph {41, 20} */
+  // console.set_at(at, 5, 7);
 
   w.display();
 }

@@ -5,11 +5,10 @@
 
 class display_sprite
 {
-private:
+public:
   sf::Vector2<unsigned> index;
   sf::Color colour;
 
-public:
   /* Constructor */
   display_sprite(sf::Vector2<unsigned> i = {0, 0}, sf::Color c = sf::Color::White);
 
