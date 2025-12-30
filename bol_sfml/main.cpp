@@ -3,12 +3,13 @@
 int
 main()
 {
-  engine game;
+  engine::init();
 
-  while (game.is_open())
+  auto w = engine::get_window();
+  while (w->isOpen())
   {
-    game.handel_event();
-    game.draw();
+    engine::handel_event();
+    engine::draw();
   }
 
   return 0;

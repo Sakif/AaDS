@@ -1,56 +1,69 @@
 #include "engine.hpp"
+#include "c_position.hpp"
+#include "c_sprite.hpp"
 
 using namespace sf;
 
-engine::engine()
-    : w(
-          VideoMode({1280, 720}),
-          "Wee"),
-      packed("asset/mono_packed.png")
+namespace engine
 {
-  w.setFramerateLimit(60);
-  w.setVerticalSyncEnabled(true);
+RenderWindow main_window;
+Texture packed;
+flecs::world world;
 
-  world.entity("Player")
-      .set<sprite_c>({41, 20, Color::White})
-      .set<position_c>({5, 7});
-}
-
-bool
-engine::is_open() const
+RenderWindow *
+get_window()
 {
-  return w.isOpen();
+  return &main_window;
 }
 
 void
-engine::handel_event()
+init()
 {
-  while (std::optional<Event> e = w.pollEvent())
+  main_window = RenderWindow(VideoMode({1280, 720}), "Bushes of Love");
+  main_window.setFramerateLimit(60);
+  main_window.setVerticalSyncEnabled(true);
+  packed = Texture("asset/mono_packed.png");
+
+  world.entity("Player")
+      .add<c_sprite>()
+      .set<c_position>({5, 7});
+}
+
+void
+draw_sprite(const c_sprite &s, const c_position &p)
+{
+  Sprite sp(packed, s.rect());
+  sp.setColor(s.colour);
+  sp.setPosition(p.pos());
+  main_window.draw(sp);
+}
+
+void
+handel_event()
+{
+  while (std::optional<Event> e = main_window.pollEvent())
   {
     if (e->is<Event::Closed>())
     {
-      w.close();
+      main_window.close();
     }
     else if (const sf::Event::KeyPressed *key = e->getIf<Event::KeyPressed>())
     {
       if (key->scancode == Keyboard::Scancode::Escape)
       {
-        w.close();
+        main_window.close();
       }
     }
   }
 }
 
 void
-engine::draw()
+draw()
 {
-  w.clear();
+  main_window.clear();
+  world.each(draw_sprite);
 
-  world.each([](sprite_c &s, position_c &p)
-             { printf("Sprinte (%d, %d) %d\nPosition: (%d,%d)\n", s.x, s.y, s.colour.toInteger(), p.x, p.y); });
-
-  // display_sprite at({41, 20}, Color::Red); /* at gliph {41, 20} */
-  // console.set_at(at, 5, 7);
-
-  w.display();
+  main_window.display();
 }
+
+} // namespace engine
