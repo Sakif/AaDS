@@ -1,6 +1,7 @@
 #include "engine.hpp"
 #include "c_position.hpp"
 #include "c_sprite.hpp"
+#include <SFML/Window/Keyboard.hpp>
 
 using namespace sf;
 
@@ -20,21 +21,28 @@ void
 init()
 {
   main_window = RenderWindow(VideoMode({1280, 720}), "Bushes of Love");
-  main_window.setFramerateLimit(60);
+  main_window.setFramerateLimit(30);
   main_window.setVerticalSyncEnabled(true);
   packed = Texture("asset/mono_packed.png");
 
   world.entity("Player")
       .add<c_sprite>()
-      .set<c_position>({5, 7});
+      .set<c_position>({0, 10});
 }
 
 void
 draw_sprite(const c_sprite &s, const c_position &p)
 {
+  Vector2<float> pos = p.pos();
+  Vector2<unsigned> window_size = main_window.getSize();
+  if (pos.x > window_size.x && pos.y > window_size.y)
+  {
+    return;
+  }
+
   Sprite sp(packed, s.rect());
   sp.setColor(s.colour);
-  sp.setPosition(p.pos());
+  sp.setPosition(pos);
   main_window.draw(sp);
 }
 
@@ -53,6 +61,13 @@ handel_event()
       {
         main_window.close();
       }
+      else if (key->scancode == Keyboard::Scancode::Up)
+      {
+        auto player = world.lookup("Player");
+        auto pos = player.get_mut<c_position>();
+        pos.y--;
+        player.assign<c_position>(pos);
+      }
     }
   }
 }
@@ -62,7 +77,6 @@ draw()
 {
   main_window.clear();
   world.each(draw_sprite);
-
   main_window.display();
 }
 
