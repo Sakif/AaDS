@@ -1,7 +1,6 @@
 #include "engine.hpp"
 #include "c_position.hpp"
 #include "c_sprite.hpp"
-#include <SFML/Window/Keyboard.hpp>
 
 using namespace sf;
 
@@ -20,7 +19,10 @@ get_window()
 void
 init()
 {
-  main_window = RenderWindow(VideoMode({1280, 720}), "Bushes of Love");
+  main_window = RenderWindow(
+      VideoMode({1280, 800}),
+      "Bushes of Love",
+      Style::Titlebar);
   main_window.setFramerateLimit(30);
   main_window.setVerticalSyncEnabled(true);
   packed = Texture("asset/mono_packed.png");
@@ -51,21 +53,38 @@ handel_event()
 {
   while (std::optional<Event> e = main_window.pollEvent())
   {
-    if (e->is<Event::Closed>())
-    {
-      main_window.close();
-    }
-    else if (const sf::Event::KeyPressed *key = e->getIf<Event::KeyPressed>())
+    if (const sf::Event::KeyPressed *key = e->getIf<Event::KeyPressed>())
     {
       if (key->scancode == Keyboard::Scancode::Escape)
       {
         main_window.close();
       }
-      else if (key->scancode == Keyboard::Scancode::Up)
+      else if (key->scancode == Keyboard::Scancode::Numpad8)
       {
         auto player = world.lookup("Player");
         auto pos = player.get_mut<c_position>();
         pos.y--;
+        player.assign<c_position>(pos);
+      }
+      else if (key->scancode == Keyboard::Scancode::Numpad2)
+      {
+        auto player = world.lookup("Player");
+        auto pos = player.get_mut<c_position>();
+        pos.y++;
+        player.assign<c_position>(pos);
+      }
+      else if (key->scancode == Keyboard::Scancode::Numpad6)
+      {
+        auto player = world.lookup("Player");
+        auto pos = player.get_mut<c_position>();
+        pos.x++;
+        player.assign<c_position>(pos);
+      }
+      else if (key->scancode == Keyboard::Scancode::Numpad4)
+      {
+        auto player = world.lookup("Player");
+        auto pos = player.get_mut<c_position>();
+        pos.x--;
         player.assign<c_position>(pos);
       }
     }
