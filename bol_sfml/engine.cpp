@@ -6,9 +6,9 @@ using namespace sf;
 
 namespace engine
 {
-RenderWindow main_window;
-Texture packed;
-flecs::world world;
+static RenderWindow main_window;
+static Texture packed;
+static flecs::world world;
 
 RenderWindow *
 get_window()
@@ -20,7 +20,7 @@ void
 init()
 {
   main_window = RenderWindow(
-      VideoMode({1280, 800}),
+      VideoMode({1600, 880}),
       "Bushes of Love",
       Style::Titlebar);
   main_window.setFramerateLimit(30);
