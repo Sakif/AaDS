@@ -5,7 +5,7 @@ main()
 {
   engine::init();
 
-  sf::RenderWindow *w = engine::get_window();
+  auto w = engine::get_window();
   while (w->isOpen())
   {
     engine::handel_event();

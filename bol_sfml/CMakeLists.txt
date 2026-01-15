@@ -1,16 +1,9 @@
-project("bol")
+project("bol"
+  VERSION "1"
+  DESCRIPTION "A simple roguelike made with SFML 3 and FLECS 4"
+  HOMEPAGE_URL ""
+  LANGUAGES CXX)
 
-# set(BUILD_SHARED_LIBS OFF)
-set(SFML_STATIC_LIBRARIES ON)
-include(FetchContent)
-FetchContent_Declare(SFML
-  GIT_REPOSITORY "https://github.com/SFML/SFML.git"
-  GIT_TAG "3.0.2"
-  GIT_SHALLOW ON EXCLUDE_FROM_ALL SYSTEM)
-FetchContent_Declare(FLECS
-  GIT_REPOSITORY "https://github.com/SanderMertens/flecs.git"
-  GIT_TAG "v4.1.4"
-  GIT_SHALLOW ON EXCLUDE_FROM_ALL SYSTEM)
 FetchContent_MakeAvailable(SFML FLECS)
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
   # Automatically reconfigure if source files are added/removed.
@@ -20,7 +13,7 @@ add_executable(${PROJECT_NAME} ${SRC_FILES})
 target_compile_definitions(${PROJECT_NAME} PRIVATE flecs_STATIC=1)
 target_compile_options(${PROJECT_NAME} PUBLIC
   -Wall -Wextra -Wpedantic -Werror
-  -m64 -g0 -march=native -mtune=native)
+  -m64 -g0 -march=x86-64-v3 -mtune=native)
 set_target_properties(${PROJECT_NAME} PROPERTIES
   CXX_STANDARD 17 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS YES
   INTERPROCEDURAL_OPTIMIZATION TRUE)

@@ -20,7 +20,7 @@ void
 init()
 {
   main_window = RenderWindow(
-      VideoMode({1600, 880}),
+      VideoMode({1280, 960}),
       "Bushes of Love",
       Style::Titlebar);
   main_window.setFramerateLimit(30);
