@@ -9,6 +9,7 @@ namespace engine
 static RenderWindow main_window;
 static Texture packed;
 static flecs::world world;
+static Vector2<unsigned> sprite_size;
 
 RenderWindow *
 get_window()

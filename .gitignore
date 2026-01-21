@@ -1,4 +1,11 @@
 build/
 .vscode/
 .cache/
-**/*.pdf
+*.pdf
+*.toc
+*.aux
+*.log
+*.nav
+*.snm
+*.out
+*.build

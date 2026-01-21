@@ -2,11 +2,6 @@ cmake_minimum_required(VERSION 3.30 FATAL_ERROR)
 
 set(CMAKE_BUILD_TYPE MinSizeRel)
 
-IF (WIN32)
-  set(CMAKE_CXX_COMPILER "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe")
-  set(CMAKE_C_COMPILER "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\Llvm\\x64\\bin\\clang.exe")
-ENDIF()
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 find_program(MOLD_PROGRAM mold)
 if(MOLD_PROGRAM)
@@ -21,7 +16,7 @@ FetchContent_Declare(SFML GIT_REPOSITORY "https://github.com/SFML/SFML.git" GIT_
 set(SDL_STATIC ON)
 set(SDL_SHARED OFF)
 FetchContent_Declare(SDL GIT_REPOSITORY "https://github.com/libsdl-org/SDL.git" GIT_TAG "release-3.4.0" GIT_SHALLOW ON EXCLUDE_FROM_ALL SYSTEM)
-set("flecs_STATIC" on)
+set(flecs_STATIC ON)
 FetchContent_Declare(FLECS GIT_REPOSITORY "https://github.com/SanderMertens/flecs.git" GIT_TAG "v4.1.4" GIT_SHALLOW ON EXCLUDE_FROM_ALL SYSTEM)
 
 project(wee)
