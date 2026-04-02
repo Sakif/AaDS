@@ -1,6 +1,5 @@
 project("bol" VERSION "1"
   DESCRIPTION "A simple roguelike made with SFML 3 and FLECS 4"
-  HOMEPAGE_URL ""
   LANGUAGES CXX)
 
 FetchContent_MakeAvailable(SFML FLECS)

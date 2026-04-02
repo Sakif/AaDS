@@ -27,7 +27,7 @@ init()
   main_window.setFramerateLimit(30);
   main_window.setVerticalSyncEnabled(true);
   packed = Texture("asset/mono_packed.png");
-
+  sprite_size = {16, 16};
   world.entity("Player")
       .add<c_sprite>()
       .set<c_position>({0, 10});
