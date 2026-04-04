@@ -27,4 +27,6 @@ https://www.youtube.com/playlist?list=PL9j0VjDqrA33gQhgkToaqCpnJMlhUKhQX
 # Ocean Horror game w\o wather
 https://www.youtube.com/watch?v=HAMD2vBIYsY
 
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHj+6opZ9+ODPhVI8lWLA1ikEVkl5fBGuLwFCwSWYNPl corp\aq679@EMA-5CD149HPBD
+
 the cake is a lie; There i$ pi3
